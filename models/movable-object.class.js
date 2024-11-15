@@ -9,6 +9,8 @@ class MovableObject {
   loadImage(path){
     this.img = new Image();   // bereits gegebenes Object in JS, this.img = document.getElementById('image') <img id="image" src>
     this.img.src = path;
+    //console.log(this.img.width);
+    
   }
 
   /**
