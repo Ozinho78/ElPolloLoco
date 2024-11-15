@@ -6,14 +6,21 @@ class World {
     new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
     new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0)
   ];
+  clouds = [
+    new Cloud(),
+    new Cloud()
+  ];
   enemies = [
     new Chicken(),    // creates new objects from class Chicken and loads constructor, writes objects into array
     new Chicken(),
     new Chicken()
   ];
-  clouds = [
-    new Cloud(),
-    new Cloud()
+  coins = [
+    new Coin(250, 200),
+    new Coin(320, 200),
+    new Coin(380, 200),
+    new Coin(450, 200),
+    new Coin(510, 200)
   ];
 
   canvas;   // necessary in draw-method, thus it has to be declared outside contructor
@@ -34,6 +41,7 @@ class World {
 
     this.addObjectsToMap(this.backgroundObjects);
     this.addObjectsToMap(this.clouds);
+    this.addObjectsToMap(this.coins);
     this.addObjectsToMap(this.enemies);
 
     this.addToMap(this.character);
