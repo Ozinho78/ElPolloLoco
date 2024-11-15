@@ -14,15 +14,20 @@ class Cloud extends MovableObject {
   }
 
 
-
-  /**
-  * Animates the cloud, making it move across the screen to the left
-  */
   animate(){
-    setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
-      this.x -= 0.3;
-    }, 1000 / 60);
+    this.moveLeft();
   }
 
+
+  
+  /**
+  * Animates the cloud, making it move across the screen to the left
+  
+  animate(){
+    setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
+      this.x -= this.speed;
+    }, 1000 / 60);
+  }
+  */
 
 }

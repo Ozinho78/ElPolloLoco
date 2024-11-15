@@ -2,7 +2,8 @@ class Character extends MovableObject {
   // original size walk 610 x 1200px
   //width = 121;
   //height = 240;
-  y = 160;
+  x = 80;
+  y = 140;
   IMAGES_WALKING = [
     './img/2_character_pepe/2_walk/W-21.png',
     './img/2_character_pepe/2_walk/W-22.png',
@@ -25,14 +26,14 @@ class Character extends MovableObject {
     //   './img/2_character_pepe/2_walk/W-26.png'
     // ]);
 
-    this.loadImages(this.IMAGES_WALKING);
+    this.loadImages(this.IMAGES_WALKING);   // loads images when new object is created
     
     // console.log(this.img.width);
     // console.log(this.img.height);
     this.width = this.img.width * scaleFactor;
     this.height = this.img.height * scaleFactor;
 
-    this.animate();
+    this.animate();   // calls animate-method with the setinterval-function
   }
 
   

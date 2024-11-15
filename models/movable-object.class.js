@@ -4,8 +4,10 @@ class MovableObject {
   img;
   height = 150;
   width = 100;
+  speed = 0.15;   // for setting moving speed
   // imageCache = [];
   imageCache = {};
+  currentImage = 0;   // for iteration through the animation for character and chicken
 
 
   /**
@@ -61,7 +63,10 @@ class MovableObject {
    * Moves object to the left
    */
   moveLeft(){
-    console.log('Moving left.');
+    setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
+      this.x -= this.speed;
+    }, 1000 / 60);
+    //console.log('Moving left.');
   }
 
 
