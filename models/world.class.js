@@ -1,9 +1,10 @@
 class World {
   character = new Character();  // creates new object from class Character and loads constructor
   backgroundObjects = [
-    new BackgroundObject('./img/5_background/layers/3_third_layer/1.png'),
-    new BackgroundObject('./img/5_background/layers/2_second_layer/1.png'),
-    new BackgroundObject('./img/5_background/layers/1_first_layer/1.png')
+    new BackgroundObject('./img/5_background/layers/air.png', 0),
+    new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 0),
+    new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
+    new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0)
   ];
   enemies = [
     new Chicken(),    // creates new objects from class Chicken and loads constructor, writes objects into array
@@ -37,7 +38,7 @@ class World {
 
     this.addToMap(this.character);
 
-    
+
     /* obsolete code, was exported to addObjectsToMap() and addToMap()-methods
     // goes through whole array of created background-objects and draws bg-layers, like for-loop
     this.backgroundObjects.forEach(bgo => {

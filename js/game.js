@@ -16,7 +16,7 @@ function init(){
   // ctx.drawImage(character, 20, 20, 50, 150);  // draws character on canvas at position 20,20 with size 50,150, doesn't show img because it needs too much time to load (like API)
 
   //console.log('My character is', world['character']);
-  console.log('My character is', world.character);
+  //console.log('My character is', world.character);
   
   
 }
