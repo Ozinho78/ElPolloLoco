@@ -7,8 +7,8 @@ class Character extends MovableObject {
 
 
   /**
-   * Lets the character jump
-   */
+  * Lets the character jump
+  */
   jump(){
 
   }

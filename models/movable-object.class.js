@@ -15,7 +15,7 @@ class MovableObject {
    * Moves object to the left
    */
   moveLeft(){
-
+    console.log('Moving left.');
   }
 
 
