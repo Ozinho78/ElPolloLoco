@@ -4,7 +4,7 @@ class BackgroundObject extends MovableObject {
 
   constructor(imagePath, x){
     super().loadImage(imagePath);
-    this.x = x;
-    this.y = 480 - this.height; // set y position to be at the bottom of the screen, no parameter necessary because y depends on height
+    this.x = x;     // starting x position
+    this.y = 480 - this.height; // set y position to be at the top of the screen, no parameter necessary because y depends on height
   }
 }

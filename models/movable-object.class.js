@@ -28,9 +28,9 @@ class MovableObject {
    * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
    */
   loadImages(arr){
-    arr.forEach((path) => {
-      let img = new Image();
-      img.src = path;
+    arr.forEach((path) => {   // path only exists within the scope of the function, contains the path to the image
+      let img = new Image();  // new image is created
+      img.src = path;         // the path is assigned to the image
       this.imageCache[path] = img; // pushes the image into JSON with "path" as the key
       //debugger;
     });

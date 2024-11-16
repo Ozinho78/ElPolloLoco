@@ -1,6 +1,7 @@
 let canvas = document.getElementById('canvas'); // Get the canvas element from index.html 720x480
 // let ctx;   // has been declared in class World where canvas was overgiven as parameter into constructor
 let world;
+let keyboard = new Keyboard(); // Create a new Keyboard object
 
 
 /**
@@ -18,5 +19,12 @@ function init(){
   //console.log('My character is', world['character']);
   //console.log('My character is', world.character);
   
-  
 }
+
+window.addEventListener('keypress', (event) => {
+  console.log(event);
+  if(keyboard.code = 'Space'){
+    keyboard.SPACE = true;
+  }
+  
+});
