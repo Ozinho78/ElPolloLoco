@@ -8,7 +8,7 @@ class MovableObject {
   // imageCache = [];
   imageCache = {};
   currentImage = 0;   // for iteration through the animation for character and chicken
-
+  otherDirection = false;
 
   /**
    * Sets the source of the image to the overgiven path

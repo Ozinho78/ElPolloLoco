@@ -101,6 +101,37 @@ class World {
   */
   // Draws MovableObject and adds it to the map
   addToMap(mo){
+    if(mo.otherDirection){    // if object has otherDirection=true (because someone has pressed LEFT), it will be drawn from the other side
+      this.flipImage(mo)  ;
+    }
     this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    if(mo.otherDirection){
+      this.flipImageBack(mo);
+    }
   }
+
+
+  /**
+   * Reverses the object that needs to be drawn
+   * @param {object} mo - movable object
+   */
+  flipImage(mo){
+    this.ctx.save();    // ctx is a collection of methods to change the canvas, i.e. draw sth.
+    this.ctx.translate(mo.width, 0);  // moves the object in order to not show jumping after changing direction
+    this.ctx.scale(-1, 1);  // flip horizontally, scale-method mirrors the object on x-axis
+    mo.x = mo.x * -1;   // to reverse the x-coordinate
+  }
+
+
+  /**
+   * Reverses the object back to its original state
+   * @param {object} mo - movable object
+   */
+  flipImageBack(mo){
+    mo.x = mo.x * -1;   // reverse the x-coordinate back to normal
+    this.ctx.restore();
+  }
+
+
+  
 }

@@ -86,13 +86,27 @@ class Character extends MovableObject {
     this.resetIdleTimeGetNewTime();
     
       setInterval(() => { // interval for in-/decreasing speed variable
-        if(this.world.keyboard.RIGHT){this.x += this.speed;this.resetIdleTimeGetNewTime();}
-        if(this.world.keyboard.LEFT){this.x -= this.speed;this.resetIdleTimeGetNewTime();}
+        if(this.world.keyboard.RIGHT){
+          this.x += this.speed;
+          this.resetIdleTimeGetNewTime();
+          this.otherDirection = false;
+        }
+        if(this.world.keyboard.LEFT){this.x -= this.speed;
+          this.resetIdleTimeGetNewTime();
+          this.otherDirection = true;
+        }
         this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;
       }, 1000 / 60);
     
       setInterval(() => {   // interval for playing the walk animation
         if(this.world.keyboard.RIGHT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
+          // Walk animation
+          let i = this.currentImage % this.IMAGES_WALKING.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+          let path = this.IMAGES_WALKING[i];
+          this.img = this.imageCache[path];
+          this.currentImage++;
+        }
+        if(this.world.keyboard.LEFT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
           // Walk animation
           let i = this.currentImage % this.IMAGES_WALKING.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
           let path = this.IMAGES_WALKING[i];
