@@ -40,6 +40,9 @@ class Character extends MovableObject {
   ];
   world;    // reference between character and world, declared in method setWorld() in class World, character can now use all variables from world
   speed = 4;
+  idleTime = 0;
+  timeDiff;
+
 
 
   constructor(){
@@ -54,6 +57,8 @@ class Character extends MovableObject {
     //   './img/2_character_pepe/2_walk/W-26.png'
     // ]);
 
+    this.loadImages(this.IMAGES_IDLE);
+    this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_WALKING);   // loads images when new object is created
     
     // console.log(this.img.width);
@@ -64,17 +69,26 @@ class Character extends MovableObject {
     this.animate();   // calls animate-method with the setInterval-function
   }
 
+
+  /**
+   * Resets the idle time and gets current time
+   */
+  resetIdleTimeGetNewTime(){
+    this.idleTime = 0;
+    this.timeDiff = new Date().getTime();
+  }
   
+
   /**
    * Animates the character by replacing the images from the chosen array
    */
   animate(){
-    let idleTime = 0;
-    let timeDiff = new Date();
-
+    this.resetIdleTimeGetNewTime();
+    
       setInterval(() => { // interval for in-/decreasing speed variable
-        if(this.world.keyboard.RIGHT){this.x += this.speed;}
-        if(this.world.keyboard.LEFT){this.x -= this.speed;}
+        if(this.world.keyboard.RIGHT){this.x += this.speed;this.resetIdleTimeGetNewTime();}
+        if(this.world.keyboard.LEFT){this.x -= this.speed;this.resetIdleTimeGetNewTime();}
+        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;
       }, 1000 / 60);
     
       setInterval(() => {   // interval for playing the walk animation
@@ -86,8 +100,45 @@ class Character extends MovableObject {
           this.currentImage++;
         }
       }, 75);
+
+      setInterval(() => {
+        if((this.idleTime >= 5) && (this.idleTime < 10)){
+          this.playIdleAnimation(this.IMAGES_IDLE);
+        }
+        if(this.idleTime >= 10){
+          this.playIdleAnimation(this.IMAGES_LONG_IDLE);
+        }
+        //console.log(this.idleTime);
+      }, 1000);
   }
 
+
+  /**
+   * Checks if a valid key is pressed
+   * @returns true if a valid key is pressed, i.e. for ending an interval
+   */
+  validKeyPressed(){
+    return (this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT) || (this.world.keyboard.UP) || (this.world.keyboard.DOWN) || (this.world.keyboard.SPACE);
+  }
+
+
+  /**
+   * Plays animation for Pepe in idle state
+   * @param {Array} arr - Array of image paths, normal idle or long idle
+   */
+  playIdleAnimation(arr){
+    let intervalIdle =
+      setInterval(() => {
+        let i = this.currentImage % arr.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+        let path = arr[i];
+        this.img = this.imageCache[path];
+        this.currentImage++;
+        if(this.validKeyPressed()){
+          clearInterval(intervalIdle);
+          this.loadImage('./img/2_character_pepe/2_walk/W-21.png');
+        }
+      }, 500);
+  }
 
 
   /**
