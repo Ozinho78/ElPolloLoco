@@ -24,12 +24,20 @@ class World {
   ];
 
   canvas;   // necessary in draw-method, thus it has to be declared outside contructor
+  keyboard; // necessary for usage in class methods and detecting which key has been pressed
   ctx;
 
-  constructor(canvas){
+  constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
     this.canvas = canvas;     // assigns parameter canvas (from game.js) to class variable
+    this.keyboard = keyboard;  // assigns parameter from game.js to class variable
     this.draw();              // calls draw-method everytime a new object from class World is created
+    this.setWorld();          // necessary to overgive keyboard to the other objects, reference from object to world required
+  }
+
+
+  setWorld(){
+    this.character.world = this;    // reference from character to world created for usage of keyboard input, world-variable needs to be declared in class character
   }
 
 
