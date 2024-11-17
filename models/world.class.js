@@ -95,7 +95,9 @@ class World {
     if(mo.otherDirection){    // if object has otherDirection=true (because someone has pressed LEFT), it will be drawn from the other side
       this.flipImage(mo)  ;
     }
-    this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    mo.draw(this.ctx);    // method was moved to movable-object class with this.ctx as parameter
+    mo.drawFrame(this.ctx); // method was moved to movable-object class with this.ctx as parameter
+
     if(mo.otherDirection){
       this.flipImageBack(mo);
     }

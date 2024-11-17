@@ -14,6 +14,28 @@ class MovableObject {
 
 
   /**
+   * Draw object on canvas
+   * @param {context} ctx - context, contains methods to draw objects on canvas
+   */
+  draw(ctx){
+    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+  }
+
+
+  /**
+   * Draws rectangle around objects for better collision coding
+   * @param {context} ctx - context, contains methods to draw objects on canvas
+   */
+  drawFrame(ctx){
+    ctx.beginPath();
+    ctx.lineWidth = "2";
+    ctx.strokeStyle = "blue";
+    ctx.rect(this.x, this.y, this.width, this.height);
+    ctx.stroke();
+  }
+
+
+  /**
    * Simulates gravity by adding speed to y-axis
    */
   applyGravity(){
