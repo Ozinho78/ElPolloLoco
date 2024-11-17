@@ -34,6 +34,7 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_WALKING);   // loads images when new object is created
+    this.loadImages(this.IMAGES_JUMP);
     
     // console.log(this.img.width);
     // console.log(this.img.height);
@@ -62,38 +63,48 @@ class Character extends MovableObject {
     
       setInterval(() => { // interval for in-/decreasing speed variable
         this.sound_walking.pause();
-        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){           // usage of variable level from class World, alternatively level1.level_end_x
+        
+        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){      // usage of variable level from class World, alternatively level1.level_end_x
           this.x += this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = false;
           this.sound_walking.play();
         }
+        
         if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
           this.x -= this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = true;
           this.sound_walking.play();
         }
+
+        if((this.world.keyboard.UP) && (!this.isAboveGround())){
+          this.speedY = 30;
+          this.resetIdleTimeGetNewTime();
+        }
+
         this.world.cameraX = -this.x + 80;   // moves the camera in opposite direction of walking character, +80 for position the character more right
         this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;   // get the time difference in seconds since last keypress
       }, 1000 / 60);
+
     
       setInterval(() => {   // interval for playing the walk animation
-        if(this.world.keyboard.RIGHT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
-          // Walk animation
-          this.playAnimation(this.IMAGES_WALKING);
-        }
-        if(this.world.keyboard.LEFT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
-          // Walk animation
-          this.playAnimation(this.IMAGES_WALKING);
+        if(this.isAboveGround()){
+          this.playAnimation(this.IMAGES_JUMP);
+        } else {
+          if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
+            // Walk animation
+            this.playAnimation(this.IMAGES_WALKING);
+          }
         }
       }, 75);
 
+      // Interval for supervising the idle time
       setInterval(() => {
-        if((this.idleTime >= 5) && (this.idleTime < 10)){
+        if((this.idleTime >= 10) && (this.idleTime < 15)){
           this.playIdleAnimation(this.IMAGES_IDLE);
         }
-        if(this.idleTime >= 10){
+        if(this.idleTime >= 15){
           this.playIdleAnimation(this.IMAGES_LONG_IDLE);
         }
         //console.log(this.idleTime);
@@ -118,10 +129,20 @@ class Character extends MovableObject {
     let intervalIdle =
       setInterval(() => {
         this.playAnimation(arr);
-        this.sound_snoring.play();
+        // let promise = this.sound_snoring.play();
+        // if (promise !== undefined) {
+        //   promise.then(_ => {
+        //     this.sound_snoring.play();
+        //   }).catch(error => {
+        //     // Autoplay was prevented.
+        //     // Show a "Play" button so that user can start playback.
+        //     // console.warn('Please interact first to hear Pepe snoring!');
+        //     // alert('Please interact first to hear Pepe snoring!');
+        //   });
+        // }
         if(this.validKeyPressed()){
           clearInterval(intervalIdle);
-          this.sound_snoring.pause();
+          // this.sound_snoring.pause();
           this.loadImage('./img/2_character_pepe/2_walk/W-21.png');
         }
       }, 500);
