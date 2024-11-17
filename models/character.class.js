@@ -65,21 +65,21 @@ class Character extends MovableObject {
         this.sound_walking.pause();
         
         if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){      // usage of variable level from class World, alternatively level1.level_end_x
-          this.x += this.speed;
-          this.resetIdleTimeGetNewTime();
+          this.moveRight()      // exported to movable-object-class
           this.otherDirection = false;
           this.sound_walking.play();
+          this.resetIdleTimeGetNewTime();
         }
         
         if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
-          this.x -= this.speed;
-          this.resetIdleTimeGetNewTime();
+          this.moveLeft();      // exported to movable-object-class
           this.otherDirection = true;
           this.sound_walking.play();
+          this.resetIdleTimeGetNewTime();
         }
 
-        if((this.world.keyboard.UP) && (!this.isAboveGround())){
-          this.speedY = 30;
+        if((this.world.keyboard.UP) && (!this.isAboveGround())){  // for jumping
+          this.jump();    // exported to movable-object-class
           this.resetIdleTimeGetNewTime();
         }
 
@@ -149,10 +149,4 @@ class Character extends MovableObject {
   }
 
 
-  /**
-  * Lets the character jump
-  */
-  jump(){
-
-  }
 }

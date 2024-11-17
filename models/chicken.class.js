@@ -33,7 +33,9 @@ class Chicken extends MovableObject {
    * Animates the chicken by replacing the images from the chosen array
    */
   animate(){
-    this.moveLeft();
+    setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
+      this.moveLeft();    // exported to movable-object-class
+    }, 1000 / 60);
     setInterval(() => {
       this.playAnimation(this.IMAGES_WALKING);
     }, 500);

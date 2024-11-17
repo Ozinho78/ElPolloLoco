@@ -18,9 +18,9 @@ class MovableObject {
    */
   applyGravity(){
     setInterval(() => {
-      if(this.isAboveGround() || (this.speedY > 0))
-      this.y -= this.speedY;        // starts with 0
-      this.speedY -= this.acceleration; // adds with every interval more speed to the y-axis
+      if(this.isAboveGround() || (this.speedY > 0))   // starts when UP is pressed, because speedY is > 0
+      this.y -= this.speedY;        // moves character away from ground, because y-value is reduced
+      this.speedY -= this.acceleration; // adds with every interval more speed to the y-axis until character hits ground
     }, 1000 / 25)
   }
 
@@ -99,10 +99,8 @@ class MovableObject {
    * Moves object to the left
    */
   moveLeft(){
-    setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
-      this.x -= this.speed;
-    }, 1000 / 60);
     //console.log('Moving left.');
+    this.x -= this.speed;
   }
 
 
@@ -110,6 +108,15 @@ class MovableObject {
    * Moves object to the right
    */
   moveRight(){
-    console.log('Moving right.');  
+    //console.log('Moving right.');
+    this.x += this.speed;
+  }
+
+
+  /**
+   * Lets the character jump
+   */
+  jump(){
+    this.speedY = 30;         // subtracts y-position with applyGravity()-method/interval, less y = nearer to top of canvas
   }
 }
