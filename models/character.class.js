@@ -15,7 +15,8 @@ class Character extends MovableObject {
   speed = 4;
   idleTime = 0;
   timeDiff;
-  walking_sound = new Audio('./audio/running.mp3');
+  sound_walking = new Audio('./audio/running.mp3');
+  sound_snoring = new Audio('./audio/snore.mp3');
 
 
   constructor(){
@@ -39,6 +40,7 @@ class Character extends MovableObject {
     this.width = this.img.width * scaleFactor;
     this.height = this.img.height * scaleFactor;
 
+    this.applyGravity();
     this.animate();   // calls animate-method with the setInterval-function
   }
 
@@ -59,18 +61,18 @@ class Character extends MovableObject {
     this.resetIdleTimeGetNewTime();
     
       setInterval(() => { // interval for in-/decreasing speed variable
-        this.walking_sound.pause();
+        this.sound_walking.pause();
         if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){           // usage of variable level from class World, alternatively level1.level_end_x
           this.x += this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = false;
-          this.walking_sound.play();
+          this.sound_walking.play();
         }
         if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
           this.x -= this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = true;
-          this.walking_sound.play();
+          this.sound_walking.play();
         }
         this.world.cameraX = -this.x + 80;   // moves the camera in opposite direction of walking character, +80 for position the character more right
         this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;   // get the time difference in seconds since last keypress
@@ -116,8 +118,10 @@ class Character extends MovableObject {
     let intervalIdle =
       setInterval(() => {
         this.playAnimation(arr);
+        this.sound_snoring.play();
         if(this.validKeyPressed()){
           clearInterval(intervalIdle);
+          this.sound_snoring.pause();
           this.loadImage('./img/2_character_pepe/2_walk/W-21.png');
         }
       }, 500);

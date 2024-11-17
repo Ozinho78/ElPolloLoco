@@ -9,6 +9,30 @@ class MovableObject {
   imageCache = {};
   currentImage = 0;   // for iteration through the animation for character and chicken
   otherDirection = false;
+  speedY = 0;
+  acceleration = 2.5;
+
+
+  /**
+   * Simulates gravity by adding speed to y-axis
+   */
+  applyGravity(){
+    setInterval(() => {
+      if(this.isAboveGround())
+      this.y -= this.speedY;        // starts with 0
+      this.speedY -= this.acceleration; // adds with every interval more speed to the y-axis
+    }, 1000 / 25)
+  }
+
+
+  /**
+   * Checks if character is in the air or on the ground
+   * @returns true if character is not on the ground
+   */
+  isAboveGround(){
+    return this.y < 140;
+  }
+
 
   /**
    * Sets the source of the image to the overgiven path
