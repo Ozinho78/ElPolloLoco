@@ -1,32 +1,18 @@
 class World {
   character = new Character();  // creates new object from class Character and loads constructor
-  backgroundObjects = [
-    new BackgroundObject('./img/5_background/layers/air.png', 0),
-    new BackgroundObject('./img/5_background/layers/3_third_layer/1.png', 0),
-    new BackgroundObject('./img/5_background/layers/2_second_layer/1.png', 0),
-    new BackgroundObject('./img/5_background/layers/1_first_layer/1.png', 0)
-  ];
-  clouds = [
-    new Cloud(),
-    new Cloud()
-  ];
-  enemies = [
-    new Chicken(),    // creates new objects from class Chicken and loads constructor, writes objects into array
-    new Chicken(),
-    new Chicken()
-  ];
-  coins = [
-    new Coin(250, 200),
-    new Coin(320, 200),
-    new Coin(380, 200),
-    new Coin(450, 200),
-    new Coin(510, 200)
-  ];
+  level = level1;   // to access all variables of level1, no declaration of the below variables necessary
+  /*
+  backgroundObjects = level1.backgroundObjects; // gets the backgroundOjects stored in variable level1 (instance of class Level)
+  clouds = level1.clouds;   // variable level1 was created from class Level and gets all variables within, including clouds and backgroundObjects...
+  enemies = level1.enemies; // same as above
+  coins = level1.coins; // same as above
+  */
 
   canvas;   // necessary in draw-method, thus it has to be declared outside contructor
   keyboard; // necessary for usage in class methods and detecting which key has been pressed
-  ctx;
-
+  ctx;      // context, necessary for drawing on canvas
+  cameraX = 0;  // camera position on x-axis for moving with the character or better against the character's position
+  
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
     this.canvas = canvas;     // assigns parameter canvas (from game.js) to class variable
@@ -47,12 +33,17 @@ class World {
   draw(){
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);  // clears canvas
 
-    this.addObjectsToMap(this.backgroundObjects);
-    this.addObjectsToMap(this.clouds);
-    this.addObjectsToMap(this.coins);
-    this.addObjectsToMap(this.enemies);
+    this.ctx.translate(this.cameraX, 0);   // moves the origin/context to the left by the value of cameraX, so the background moves to the right
+
+    this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.enemies);
 
     this.addToMap(this.character);
+
+    // translate() needs two arguments, so we have to set the tanslation of the y-axis to 0
+    this.ctx.translate(-this.cameraX, 0);  // moves the origin/context back to the original position after drawing all objects
 
 
     /* obsolete code, was exported to addObjectsToMap() and addToMap()-methods
@@ -133,5 +124,5 @@ class World {
   }
 
 
-  
+
 }

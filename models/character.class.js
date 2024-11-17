@@ -42,6 +42,7 @@ class Character extends MovableObject {
   speed = 4;
   idleTime = 0;
   timeDiff;
+  walking_sound = new Audio('./audio/running.mp3');
 
 
 
@@ -86,32 +87,31 @@ class Character extends MovableObject {
     this.resetIdleTimeGetNewTime();
     
       setInterval(() => { // interval for in-/decreasing speed variable
-        if(this.world.keyboard.RIGHT){
+        this.walking_sound.pause();
+        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){           // usage of variable level from class World, alternatively level1.level_end_x
           this.x += this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = false;
+          this.walking_sound.play();
         }
-        if(this.world.keyboard.LEFT){this.x -= this.speed;
+        if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
+          this.x -= this.speed;
           this.resetIdleTimeGetNewTime();
           this.otherDirection = true;
+          this.walking_sound.play();
         }
-        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;
+        this.world.cameraX = -this.x + 80;   // moves the camera in opposite direction of walking character, +80 for position the character more right
+        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;   // get the time difference in seconds since last keypress
       }, 1000 / 60);
     
       setInterval(() => {   // interval for playing the walk animation
         if(this.world.keyboard.RIGHT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
           // Walk animation
-          let i = this.currentImage % this.IMAGES_WALKING.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
-          let path = this.IMAGES_WALKING[i];
-          this.img = this.imageCache[path];
-          this.currentImage++;
+          this.playAnimation(this.IMAGES_WALKING);
         }
         if(this.world.keyboard.LEFT){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
           // Walk animation
-          let i = this.currentImage % this.IMAGES_WALKING.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
-          let path = this.IMAGES_WALKING[i];
-          this.img = this.imageCache[path];
-          this.currentImage++;
+          this.playAnimation(this.IMAGES_WALKING);
         }
       }, 75);
 

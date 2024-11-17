@@ -60,6 +60,18 @@ class MovableObject {
 
 
   /**
+   * Animates the images of a given array
+   * @param {Array} arr - array with images for animation
+   */
+  playAnimation(arr){
+    let i = this.currentImage % arr.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+    let path = arr[i];
+    this.img = this.imageCache[path];
+    this.currentImage++;
+  }
+
+
+  /**
    * Moves object to the left
    */
   moveLeft(){
