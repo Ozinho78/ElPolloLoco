@@ -1,6 +1,7 @@
 class Endboss extends MovableObject {
   // original size 1045 X 1217
-  x = 400;
+  x = 2500;  // on last screen with factor 3
+  //x = 400;  // on first screen
   y = 90;
 
   IMAGES_ALERT = [

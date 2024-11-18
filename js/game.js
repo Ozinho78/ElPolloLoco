@@ -1,11 +1,23 @@
 let canvas = document.getElementById('canvas'); // Get the canvas element from index.html 720x480
+//let startScreen = document.getElementById('start_screen');
 // let ctx;   // has been declared in class World where canvas was overgiven as parameter into constructor
 let world;
 let keyboard = new Keyboard(); // Create a new Keyboard object
 
 
 /**
- * Starts the Game
+ * Starts the game by clicking on the start screen
+ 
+function startGame() {
+  startScreen.classList.add('d-none');
+  canvas.classList.remove('d-none');
+  initLevel1();
+  world = new World(canvas, keyboard);
+}
+*/
+
+/**
+ * Starts the Game if no start screen exists
  */
 function init(){
   //canvas = document.getElementById('canvas');   // Get the canvas element from index.html 720x480

@@ -27,11 +27,13 @@ class MovableObject {
    * @param {context} ctx - context, contains methods to draw objects on canvas
    */
   drawFrame(ctx){
-    ctx.beginPath();
-    ctx.lineWidth = "2";
-    ctx.strokeStyle = "blue";
-    ctx.rect(this.x, this.y, this.width, this.height);
-    ctx.stroke();
+    if((this instanceof Character) || (this instanceof Chicken)){   // draws frame only for character and chicken objects
+      ctx.beginPath();
+      ctx.lineWidth = "2";
+      ctx.strokeStyle = "blue";
+      ctx.rect(this.x, this.y, this.width, this.height);
+      ctx.stroke();
+    }
   }
 
 
@@ -141,4 +143,24 @@ class MovableObject {
   jump(){
     this.speedY = 30;         // subtracts y-position with applyGravity()-method/interval, less y = nearer to top of canvas
   }
+
+
+  /**
+   * Checks if the character collides with an object
+   * @param {object} mo - moveable object that need to be checked for collision
+   * @returns true if collision is detected
+   */
+  isColliding(mo){
+    return (this.x + this.width > mo.x) &&
+           (this.y + this.height > mo.y) &&
+           (this.x < mo.x) &&
+           (this.y < mo.y + mo.height);
+  }
+
+  /*
+  if(character.x + character.width > chicken.x) &&
+  (character.y + character.height > chicken.y) &&
+  (character.x < chicken.x) &&
+  (character.y < chicken.y + chicken.height);
+  */
 }

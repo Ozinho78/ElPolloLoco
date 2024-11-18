@@ -1,3 +1,6 @@
+//let level1;
+
+//function initLevel1(){
 // creates new object level1 from Level and overgives the parameters that need to be drawn in World
 let level1 = new Level(
   [
@@ -44,3 +47,4 @@ let level1 = new Level(
     new Coin(510, 200)
   ]
 );
+//}

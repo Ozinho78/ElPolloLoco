@@ -19,11 +19,24 @@ class World {
     this.keyboard = keyboard;  // assigns parameter from game.js to class variable
     this.draw();              // calls draw-method everytime a new object from class World is created
     this.setWorld();          // necessary to overgive keyboard to the other objects, reference from object to world required
+    this.checkCollisions();
   }
 
 
   setWorld(){
     this.character.world = this;    // reference from character to world created for usage of keyboard input, world-variable needs to be declared in class character
+  }
+
+
+  checkCollisions(){
+    setInterval(() => {
+      this.level.enemies.forEach((enemy) => { // loops through all enemies in level and checks for collision with character
+        if(this.character.isColliding(enemy)){
+          console.log('Collision with character ', enemy);
+          //this.level.enemies.pop(enemy);
+        };
+      });
+    }, 200);
   }
 
 
