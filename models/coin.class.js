@@ -1,5 +1,7 @@
 class Coin extends MovableObject {
   // original size coin 300 x 300
+  width = 120;
+  height = 120;
 
   IMAGES_COIN = [
     './img/8_coin/coin_1.png',
@@ -7,13 +9,13 @@ class Coin extends MovableObject {
   ];
 
   constructor(x, y){
-    const scaleFactor = 0.4;
+    //const scaleFactor = 0.4;
     super().loadImage('./img/8_coin/coin_1.png');
     this.loadImages(this.IMAGES_COIN);
     this.x = x;
     this.y = y;
-    this.width = this.img.width * scaleFactor;
-    this.height = this.img.height * scaleFactor;
+    //this.width = this.img.width * scaleFactor;
+    //this.height = this.img.height * scaleFactor;
 
     this.animate();
   }

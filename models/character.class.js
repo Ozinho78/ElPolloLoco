@@ -1,7 +1,7 @@
 class Character extends MovableObject {
   // original size walk 610 x 1200px
-  //width = 121;
-  //height = 240;
+  width = 153;
+  height = 300;
   x = 80;
   y = 140;
   IMAGES_IDLE = PEPE_IMAGES['IMAGES_IDLE'];
@@ -20,7 +20,7 @@ class Character extends MovableObject {
 
 
   constructor(){
-    const scaleFactor = 0.25;
+    //const scaleFactor = 0.25;
     super().loadImage('./img/2_character_pepe/2_walk/W-21.png');  // calls constructor of above class MovableObject
     // this.loadImages([
     //   './img/2_character_pepe/2_walk/W-21.png',
@@ -38,8 +38,8 @@ class Character extends MovableObject {
     
     // console.log(this.img.width);
     // console.log(this.img.height);
-    this.width = this.img.width * scaleFactor;
-    this.height = this.img.height * scaleFactor;
+    //this.width = this.img.width * scaleFactor;
+    //this.height = this.img.height * scaleFactor;
 
     this.applyGravity();
     this.animate();   // calls animate-method with the setInterval-function

@@ -3,6 +3,8 @@ class Endboss extends MovableObject {
   x = 2500;  // on last screen with factor 3
   //x = 400;  // on first screen
   y = 90;
+  width = 314;
+  height = 365;
 
   IMAGES_ALERT = [
     './img/4_enemie_boss_chicken/2_alert/G5.png',
@@ -16,11 +18,11 @@ class Endboss extends MovableObject {
   ];
 
   constructor(){
-    const scaleFactor = 0.3;
+    //const scaleFactor = 0.3;
     super().loadImage('./img/4_enemie_boss_chicken/1_walk/G1.png');
     this.loadImages(this.IMAGES_ALERT);
-    this.width = this.img.width * scaleFactor;
-    this.height = this.img.height * scaleFactor;
+    //this.width = this.img.width * scaleFactor;
+    //this.height = this.img.height * scaleFactor;
     
     this.animate();
   }
