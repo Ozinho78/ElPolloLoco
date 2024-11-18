@@ -2,6 +2,16 @@ class Chicken extends MovableObject {
   // original size chicken walk 248 x 243
   width = 74;
   height = 73;
+  offset = {
+    top: -15,
+    left: 30,
+    right: 30,
+    bottom: -15
+  };
+  offsetY = 0;
+  //scaleFactor = 0.3;    // not working
+  //width = width * scaleFactor;
+  //height = height * scaleFactor;
   y = 360;
 
   IMAGES_WALKING = [
@@ -22,7 +32,7 @@ class Chicken extends MovableObject {
     this.x = 250 + Math.random() * 500;   // random x position between 200 and 700 for every chicken
     this.speed = 0.15 + Math.random() * 0.25; // for random chicken speed
 
-    //this.width = this.img.width * scaleFactor;
+    //this.width = this.img.width * scaleFactor;    // increases loading-time, maybe because every img is calculated
     //this.height = this.img.height * scaleFactor;
 
     this.animate();

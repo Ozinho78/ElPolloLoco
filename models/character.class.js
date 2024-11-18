@@ -4,6 +4,13 @@ class Character extends MovableObject {
   height = 300;
   x = 80;
   y = 140;
+  offset = {
+    top: 200,
+    left: 20,
+    bottom: 0,
+    right: 20
+  };
+  offsetY = 0;
   IMAGES_IDLE = PEPE_IMAGES['IMAGES_IDLE'];
   IMAGES_LONG_IDLE = PEPE_IMAGES['IMAGES_LONG_IDLE'];
   IMAGES_WALKING = PEPE_IMAGES['IMAGES_WALKING'];

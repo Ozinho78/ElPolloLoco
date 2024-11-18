@@ -30,11 +30,20 @@ class World {
 
   checkCollisions(){
     setInterval(() => {
+      
       this.level.enemies.forEach((enemy) => { // loops through all enemies in level and checks for collision with character
         if(this.character.isColliding(enemy)){
-          console.log('Collision with character ', enemy);
+          //console.log('Collision with character ', enemy);
           //this.level.enemies.pop(enemy);
+          this.character.energy -= 10;
+          console.log(this.character.energy);
         };
+      });
+      this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
+        if(this.character.isColliding(coin)){
+          console.log('Collision with dinerito ', coin);
+          this.level.coins.pop(coin);
+        }
       });
     }, 200);
   }

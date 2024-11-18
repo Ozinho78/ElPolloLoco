@@ -40,11 +40,11 @@ let level1 = new Level(
     new Endboss()
   ],
   [
-    new Coin(250, 200),
-    new Coin(320, 200),
-    new Coin(380, 200),
-    new Coin(450, 200),
-    new Coin(510, 200)
+    new Coin(250, 100),
+    new Coin(320, 100),
+    new Coin(380, 100),
+    new Coin(450, 100),
+    new Coin(510, 100)
   ]
 );
 //}

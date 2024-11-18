@@ -1,6 +1,13 @@
 class MovableObject {
   x = 120;
   y = 250;
+  offset = {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0 
+  };
+  offsetY = 0;
   img;
   height = 150;
   width = 100;
@@ -11,6 +18,7 @@ class MovableObject {
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
+  energy = 100;
 
 
   /**
@@ -151,10 +159,15 @@ class MovableObject {
    * @returns true if collision is detected
    */
   isColliding(mo){
-    return (this.x + this.width > mo.x) &&
-           (this.y + this.height > mo.y) &&
-           (this.x < mo.x) &&
-           (this.y < mo.y + mo.height);
+    return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+           this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+           this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+           this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    
+          //  (this.x + this.width - 40 > mo.x) &&
+          //  (this.y + this.height > mo.y) &&
+          //  (this.x < mo.x) &&
+          //  (this.y < mo.y + mo.height);
   }
 
   /*
