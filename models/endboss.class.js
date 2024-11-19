@@ -27,14 +27,12 @@ class Endboss extends MovableObject {
   animate(){
     let i = 0;
     setInterval(() => {
-      if((i < 10) && (world.character.x < 2070) && (!this.firstContact)) {
-        i = 0;
+      if((world.character.x < 2070) && (!this.firstContact)) {
         this.playAnimation(this.IMAGES_ALERT);
       } else {
         this.firstContact = true;
         this.playAnimation(this.IMAGES_ATTACK);
       }
-      i++;
     }, 200);
   }
 
