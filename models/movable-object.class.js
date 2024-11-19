@@ -22,12 +22,6 @@ class MovableObject extends DrawableObject {
   lastHit = 0;
 
 
-  
-
-
- 
-
-
   /**
    * Simulates gravity by adding speed to y-axis
    */
