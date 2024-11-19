@@ -26,11 +26,17 @@ class World {
   }
 
 
+  /**
+   * Sets the world equal to character for usage of keyboard in character class
+   */
   setWorld(){
     this.character.world = this;    // reference from character to world created for usage of keyboard input, world-variable needs to be declared in class character
   }
 
 
+  /**
+   * Checks collision with object and executes corresponding action
+   */
   checkCollisions(){
     setInterval(() => {
       
@@ -39,6 +45,7 @@ class World {
           //console.log('Collision with character ', enemy);
           //this.level.enemies.pop(enemy);
           this.character.isHit();
+          this.statusBarHealth.setPercentage(this.character.energy);
           console.log(this.character.energy);
         };
       });
@@ -63,18 +70,21 @@ class World {
     this.ctx.translate(this.cameraX, 0);   // moves the origin/context to the left by the value of cameraX, so the background moves to the right
 
     this.addObjectsToMap(this.level.backgroundObjects);
-    this.addObjectsToMap(this.level.clouds);
-    this.addObjectsToMap(this.level.coins);
-    this.addObjectsToMap(this.level.enemies);
+    this.ctx.translate(-this.cameraX, 0);
 
+    //---------- Place for fixed objects ----------//
     this.addToMap(this.statusBarHealth);
     this.addToMap(this.statusBarCoins);
     this.addToMap(this.statusBarBottles);
+
+    this.ctx.translate(this.cameraX, 0);
+    this.addObjectsToMap(this.level.clouds);
+    this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.enemies);
     this.addToMap(this.character);
 
     // translate() needs two arguments, so we have to set the tanslation of the y-axis to 0
     this.ctx.translate(-this.cameraX, 0);  // moves the origin/context back to the original position after drawing all objects
-
 
     /* obsolete code, was exported to addObjectsToMap() and addToMap()-methods
     // goes through whole array of created background-objects and draws bg-layers, like for-loop
