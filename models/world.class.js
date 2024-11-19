@@ -70,6 +70,7 @@ class World {
     this.ctx.translate(this.cameraX, 0);   // moves the origin/context to the left by the value of cameraX, so the background moves to the right
 
     this.addObjectsToMap(this.level.backgroundObjects);
+    this.addObjectsToMap(this.level.clouds);
     this.ctx.translate(-this.cameraX, 0);
 
     //---------- Place for fixed objects ----------//
@@ -78,7 +79,6 @@ class World {
     this.addToMap(this.statusBarBottles);
 
     this.ctx.translate(this.cameraX, 0);
-    this.addObjectsToMap(this.level.clouds);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.enemies);
     this.addToMap(this.character);

@@ -1,28 +1,63 @@
 let canvas = document.getElementById('canvas'); // Get the canvas element from index.html 720x480
-//let startScreen = document.getElementById('start_screen');
+let startScreen = document.getElementById('start_screen');
 // let ctx;   // has been declared in class World where canvas was overgiven as parameter into constructor
 let world;
 let keyboard = new Keyboard(); // Create a new Keyboard object
 
 
+console.log(screen.orientation.angle);
+
+
+
+function init(){
+  let mobileHudRef = document.getElementById('mobile_hud');
+  let desktopHudRef = document.getElementById('desktop_hud');
+  if(isMobile()){
+    mobileHudRef.classList.remove('d-none');
+    getTouchListeners();
+  } else {
+    desktopHudRef.classList.remove('d-none');
+    getKeyboardListeners();
+  }
+}
+
+
 /**
  * Starts the game by clicking on the start screen
- 
+ */
 function startGame() {
-  startScreen.classList.add('d-none');
-  canvas.classList.remove('d-none');
-  initLevel1();
-  world = new World(canvas, keyboard);
+  //if (isMobile()){alert('Mobile');} else {alert('Not Mobile');}
+  // const screenAngle = screen.orientation.angle;
+  // if(screenAngle == 0){
+    startScreen.classList.add('d-none');
+    canvas.classList.remove('d-none');
+    initLevel1();
+    world = new World(canvas, keyboard);
 }
-*/
+
+
+/**
+ * Uses CSS-Property Pointer:coarse to check if the device is mobile or not
+ * @returns true if the device is mobile, false otherwise
+ */
+function isMobile() {
+  let match = window.matchMedia || window.msMatchMedia;
+  if(match) {
+      let mq = match("(pointer:coarse)");
+      return mq.matches;
+  }
+  return false;
+}
+
+
 
 /**
  * Starts the Game if no start screen exists
- */
 function init(){
   //canvas = document.getElementById('canvas');   // Get the canvas element from index.html 720x480
   //ctx = canvas.getContext('2d');                // defines 2D context for canvas, has been moved to class World
   world = new World(canvas, keyboard);                   // Create a new world object and executes constructor of World, overgives keyboard as parameter to world
+  getKeyboardListeners();
   // character.src = '../img/2_character_pepe/2_walk/W-21.png';  // sets start image for character
   // console.log('My character is', character);
 
@@ -30,33 +65,66 @@ function init(){
 
   //console.log('My character is', world['character']);
   //console.log('My character is', world.character);
-  
+}
+*/
+
+
+/**
+ * Get keyboard codes for user input
+ */
+function getKeyboardListeners(){
+  window.addEventListener('keydown', (event) => {     // normally 'keypress' is enough, but arrow-keys are only triggered with 'keydown'
+    if(event.code == 'ArrowLeft'){keyboard.LEFT = true;}  // usage of 'code' because 'keycode' is outdated
+    if(event.code == 'ArrowRight'){keyboard.RIGHT = true;}
+    if(event.code == 'ArrowUp'){keyboard.UP = true;}
+    if(event.code == 'ArrowDown'){keyboard.DOWN = true;}
+    if(event.code == 'Space'){keyboard.SPACE = true;}
+  });
+  window.addEventListener('keyup', (event) => {     // normally 'keypress' is enough, but arrow-keys are only triggered with 'keydown'
+    if(event.code == 'ArrowLeft'){keyboard.LEFT = false;}  // usage of 'code' because 'keycode' is outdated
+    if(event.code == 'ArrowRight'){keyboard.RIGHT = false;}
+    if(event.code == 'ArrowUp'){keyboard.UP = false;}
+    if(event.code == 'ArrowDown'){keyboard.DOWN = false;}
+    if(event.code == 'Space'){keyboard.SPACE = false;}
+  });
 }
 
 
 /**
- * Listens to keyboard input
+ * Get touch listeners for user input on phone/tablet
  */
-window.addEventListener('keydown', (event) => {     // normally 'keypress' is enough, but arrow-keys are only triggered with 'keydown'
-  if(event.code == 'ArrowLeft'){keyboard.LEFT = true;}  // usage of 'code' because 'keycode' is outdated
-  if(event.code == 'ArrowRight'){keyboard.RIGHT = true;}
-  if(event.code == 'ArrowUp'){keyboard.UP = true;}
-  if(event.code == 'ArrowDown'){keyboard.DOWN = true;}
-  if(event.code == 'Space'){keyboard.SPACE = true;}
+function getTouchListeners(){
+  document.getElementById('btnLeft').addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    keyboard.LEFT = true;
+  });
+  document.getElementById('btnLeft').addEventListener('touchend', (event) => {
+    event.preventDefault();
+    keyboard.LEFT = false;
+  });
+  document.getElementById('btnRight').addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    keyboard.RIGHT = true;
+  });
+  document.getElementById('btnRight').addEventListener('touchend', (event) => {
+    event.preventDefault();
+    keyboard.RIGHT = false;
+  });
+  document.getElementById('btnUp').addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    keyboard.UP = true;
+  });
+  document.getElementById('btnUp').addEventListener('touchend', (event) => {
+    event.preventDefault();
+    keyboard.UP = false;
+  });
+  document.getElementById('btnJump').addEventListener('touchstart', (event) => {
+    event.preventDefault();
+    keyboard.SPACE = true;
+  });
+  document.getElementById('btnJump').addEventListener('touchend', (event) => {
+    event.preventDefault();
+    keyboard.SPACE = false;
+  });
+}
 
-  //console.log(event);
-});
-
-
-/**
- * Listens to keyboard release and resets variable to false
- */
-window.addEventListener('keyup', (event) => {     // normally 'keypress' is enough, but arrow-keys are only triggered with 'keydown'
-  if(event.code == 'ArrowLeft'){keyboard.LEFT = false;}  // usage of 'code' because 'keycode' is outdated
-  if(event.code == 'ArrowRight'){keyboard.RIGHT = false;}
-  if(event.code == 'ArrowUp'){keyboard.UP = false;}
-  if(event.code == 'ArrowDown'){keyboard.DOWN = false;}
-  if(event.code == 'Space'){keyboard.SPACE = false;}
-
-  //console.log(event);
-});

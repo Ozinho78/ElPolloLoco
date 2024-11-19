@@ -19,7 +19,7 @@ class Character extends MovableObject {
   IMAGES_DEAD = PEPE_IMAGES['IMAGES_DEAD'];
   
   world;    // reference between character and world, declared in method setWorld() in class World, character can now use all variables from world
-  speed = 4;
+  speed = 10;
   idleTime = 0;
   timeDiff;
   coin_counter = 0;
