@@ -12,6 +12,9 @@ class World {
   keyboard; // necessary for usage in class methods and detecting which key has been pressed
   ctx;      // context, necessary for drawing on canvas
   cameraX = 0;  // camera position on x-axis for moving with the character or better against the character's position
+  statusBarHealth = new StatusBarHealth(); // creates new object from class StatusBarHealth
+  statusBarCoins = new StatusBarCoins();
+  statusBarBottles = new StatusBarBottles();
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -35,14 +38,16 @@ class World {
         if(this.character.isColliding(enemy)){
           //console.log('Collision with character ', enemy);
           //this.level.enemies.pop(enemy);
-          this.character.energy -= 10;
+          this.character.isHit();
           console.log(this.character.energy);
         };
       });
       this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
         if(this.character.isColliding(coin)){
-          console.log('Collision with dinerito ', coin);
-          this.level.coins.pop(coin);
+          let idx = this.level.coins.indexOf(coin);
+          this.level.coins.splice(idx, 1);  // cuts coin from array with the specific index
+          this.character.collectCoin(); // increases coin counter and plays sound
+          //console.log('Collision with dinerito ', coin);
         }
       });
     }, 200);
@@ -62,6 +67,9 @@ class World {
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.enemies);
 
+    this.addToMap(this.statusBarHealth);
+    this.addToMap(this.statusBarCoins);
+    this.addToMap(this.statusBarBottles);
     this.addToMap(this.character);
 
     // translate() needs two arguments, so we have to set the tanslation of the y-axis to 0

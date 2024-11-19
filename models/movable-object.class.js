@@ -1,6 +1,6 @@
-class MovableObject {
-  x = 120;
-  y = 250;
+class MovableObject extends DrawableObject {
+  //x = 120;  // moved to DrawableObject
+  //y = 250;  // moved to DrawableObject
   offset = {
     top: 0,
     left: 0,
@@ -8,41 +8,24 @@ class MovableObject {
     right: 0 
   };
   offsetY = 0;
-  img;
-  height = 150;
-  width = 100;
+  //img;    // moved to DrawableObject
+  //height = 150; // moved to DrawableObject
+  //width = 100;  // moved to DrawableObject
   speed = 0.15;   // for setting moving speed
   // imageCache = [];
-  imageCache = {};
-  currentImage = 0;   // for iteration through the animation for character and chicken
+  //imageCache = {};  // moved to DrawableObject
+  //currentImage = 0;   // for iteration through the animation for character and chicken, moved to DrawableObject
   otherDirection = false;
   speedY = 0;
   acceleration = 2.5;
   energy = 100;
+  lastHit = 0;
 
 
-  /**
-   * Draw object on canvas
-   * @param {context} ctx - context, contains methods to draw objects on canvas
-   */
-  draw(ctx){
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-  }
+  
 
 
-  /**
-   * Draws rectangle around objects for better collision coding
-   * @param {context} ctx - context, contains methods to draw objects on canvas
-   */
-  drawFrame(ctx){
-    if((this instanceof Character) || (this instanceof Chicken)){   // draws frame only for character and chicken objects
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
-    }
-  }
+ 
 
 
   /**
@@ -65,56 +48,7 @@ class MovableObject {
     return this.y < 140;
   }
 
-
-  /**
-   * Sets the source of the image to the overgiven path
-   * @param {String} path - path to the image
-   */
-  //loadImage('./img/test.png')
-  loadImage(path){
-    this.img = new Image();   // bereits gegebenes Object in JS, this.img = document.getElementById('image') <img id="image" src>
-    this.img.src = path;
-    //console.log(this.img.width);
-    
-  }
-
-
-  /**
-   * Fills the imageCache with the images of the specific movable object
-   * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
-   */
-  loadImages(arr){
-    arr.forEach((path) => {   // path only exists within the scope of the function, contains the path to the image
-      let img = new Image();  // new image is created
-      img.src = path;         // the path is assigned to the image
-      this.imageCache[path] = img; // pushes the image into JSON with "path" as the key
-      //debugger;
-    });
-    /*
-    result in console log
-    world.character.imageCache
-    { ./img/2_character_pepe/2_walk/W-21.png: img,
-      ./img/2_character_pepe/2_walk/W-22.png: img,
-      ./img/2_character_pepe/2_walk/W-23.png: img,
-      ./img/2_character_pepe/2_walk/W-24.png: img,
-      ./img/2_character_pepe/2_walk/W-25.png: img,
-    …}
-      ./img/2_character_pepe/2_walk/W-21.png: img
-      ./img/2_character_pepe/2_walk/W-22.png: img
-      ./img/2_character_pepe/2_walk/W-23.png: img
-      ./img/2_character_pepe/2_walk/W-24.png: img
-      ./img/2_character_pepe/2_walk/W-25.png: img
-      ./img/2_character_pepe/2_walk/W-26.png: img
-    */
-
-    // arr.forEach((path) => {      // goes through an array with images and pushes it into the imageCache
-    //   let img = new Image();
-    //   img.src = path;
-    //   this.imageCache.push(img);
-    // });
-  }
-
-
+  
   /**
    * Animates the images of a given array
    * @param {Array} arr - array with images for animation
@@ -159,21 +93,42 @@ class MovableObject {
    * @returns true if collision is detected
    */
   isColliding(mo){
-    return this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
-           this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
-           this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
-           this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
-    
-          //  (this.x + this.width - 40 > mo.x) &&
-          //  (this.y + this.height > mo.y) &&
-          //  (this.x < mo.x) &&
-          //  (this.y < mo.y + mo.height);
+    return (this.x + this.width - this.offset.right) > (mo.x + mo.offset.left) &&
+           (this.y + this.height - this.offset.bottom) > (mo.y + mo.offset.top) &&
+           (this.x + this.offset.left) < (mo.x + mo.width - mo.offset.right) &&
+           (this.y + this.offset.top) < (mo.y + mo.height - mo.offset.bottom); 
   }
 
-  /*
-  if(character.x + character.width > chicken.x) &&
-  (character.y + character.height > chicken.y) &&
-  (character.x < chicken.x) &&
-  (character.y < chicken.y + chicken.height);
-  */
+
+  /**
+   * Reduces energy counter when hit
+   */
+  isHit(){
+    this.energy -= 5;
+    if(this.energy < 0){
+      this.energy = 0;
+    } else {
+      this.lastHit = new Date().getTime();    // gets time in milliseconds since unix epoch
+    }
+  }
+
+
+  /**
+   * Checks if character is hurt
+   */
+  isHurt(){
+    let timepassed = new Date().getTime() - this.lastHit; // checks how much time has passed since last hit
+    timepassed = timepassed / 1000; // converts milliseconds to seconds
+    return timepassed < 1; // returns true if character has been hit in the last 1 second, is used by playAnimation-method
+  }
+
+
+  /**
+   * Checks if energy is 0
+   * @returns true if energy is down to 0
+   */
+  isDead(){
+    return this.energy == 0;
+  }
+ 
 }

@@ -5,10 +5,10 @@ class Character extends MovableObject {
   x = 80;
   y = 140;
   offset = {
-    top: 200,
-    left: 20,
+    top: 130,
+    left: 26,
     bottom: 0,
-    right: 20
+    right: 26
   };
   offsetY = 0;
   IMAGES_IDLE = PEPE_IMAGES['IMAGES_IDLE'];
@@ -22,8 +22,10 @@ class Character extends MovableObject {
   speed = 4;
   idleTime = 0;
   timeDiff;
+  coin_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');
   sound_snoring = new Audio('./audio/snore.mp3');
+  sound_collected_coin = new Audio('./audio/collected-coin.mp3');  
 
 
   constructor(){
@@ -42,6 +44,8 @@ class Character extends MovableObject {
     this.loadImages(this.IMAGES_LONG_IDLE);
     this.loadImages(this.IMAGES_WALKING);   // loads images when new object is created
     this.loadImages(this.IMAGES_JUMP);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEAD);
     
     // console.log(this.img.width);
     // console.log(this.img.height);
@@ -96,14 +100,18 @@ class Character extends MovableObject {
 
     
       setInterval(() => {   // interval for playing the walk animation
-        if(this.isAboveGround()){
-          this.playAnimation(this.IMAGES_JUMP);
-        } else {
-          if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
-            // Walk animation
-            this.playAnimation(this.IMAGES_WALKING);
+        if(this.isDead()){
+          this.playAnimation(this.IMAGES_DEAD);
+        } else if(this.isHurt()){
+          this.playAnimation(this.IMAGES_HURT);
+        } else if(this.isAboveGround()){
+            this.playAnimation(this.IMAGES_JUMP);
+          } else {
+            if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
+              // Walk animation
+              this.playAnimation(this.IMAGES_WALKING);
+            }
           }
-        }
       }, 75);
 
       // Interval for supervising the idle time
@@ -156,5 +164,14 @@ class Character extends MovableObject {
   }
 
 
+
+
+  /**
+   * Increase coin counter and plays sound effect
+   */
+  collectCoin(){
+    this.coin_counter += 1;
+    this.sound_collected_coin.play();
+  }
   
 }
