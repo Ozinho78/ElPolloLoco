@@ -87,6 +87,8 @@ function getKeyboardListeners(){
     if(event.code == 'ArrowDown'){keyboard.DOWN = false;}
     if(event.code == 'Space'){keyboard.SPACE = false;}
   });
+  
+  
 }
 
 

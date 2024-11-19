@@ -15,6 +15,8 @@ class World {
   statusBarHealth = new StatusBarHealth(); // creates new object from class StatusBarHealth
   statusBarCoins = new StatusBarCoins();
   statusBarBottles = new StatusBarBottles();
+  //throwableObjects = [new ThrowableObject()];
+  throwableObjects = [];
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -22,7 +24,8 @@ class World {
     this.keyboard = keyboard;  // assigns parameter from game.js to class variable
     this.draw();              // calls draw-method everytime a new object from class World is created
     this.setWorld();          // necessary to overgive keyboard to the other objects, reference from object to world required
-    this.checkCollisions();
+    //this.checkCollisions(); // replaced by run-Interval
+    this.run();
   }
 
 
@@ -37,27 +40,43 @@ class World {
   /**
    * Checks collision with object and executes corresponding action
    */
-  checkCollisions(){
+  run(){
     setInterval(() => {
-      
-      this.level.enemies.forEach((enemy) => { // loops through all enemies in level and checks for collision with character
-        if(this.character.isColliding(enemy)){
-          //console.log('Collision with character ', enemy);
-          //this.level.enemies.pop(enemy);
-          this.character.isHit();
-          this.statusBarHealth.setPercentage(this.character.energy);
-          console.log(this.character.energy);
-        };
-      });
-      this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
-        if(this.character.isColliding(coin)){
-          let idx = this.level.coins.indexOf(coin);
-          this.level.coins.splice(idx, 1);  // cuts coin from array with the specific index
-          this.character.collectCoin(); // increases coin counter and plays sound
-          //console.log('Collision with dinerito ', coin);
-        }
-      });
+      this.checkCollisions();
+      this.checkThrowObjects();
     }, 200);
+  }
+
+
+  checkThrowObjects(){
+    if(this.keyboard.SPACE){
+      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
+      this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
+    }
+  }
+
+
+  /**
+   * Checks collision with object and executes corresponding action
+   */
+  checkCollisions(){
+    this.level.enemies.forEach((enemy) => { // loops through all enemies in level and checks for collision with character
+      if(this.character.isColliding(enemy)){
+        //console.log('Collision with character ', enemy);
+        //this.level.enemies.pop(enemy);
+        this.character.isHit();
+        this.statusBarHealth.setPercentage(this.character.energy);
+        console.log(this.character.energy);
+      };
+    });
+    this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
+      if(this.character.isColliding(coin)){
+        let idx = this.level.coins.indexOf(coin);
+        this.level.coins.splice(idx, 1);  // cuts coin from array with the specific index
+        this.character.collectCoin(); // increases coin counter and plays sound
+        //console.log('Collision with dinerito ', coin);
+      }
+    });
   }
 
 
@@ -81,6 +100,7 @@ class World {
     this.ctx.translate(this.cameraX, 0);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.enemies);
+    this.addObjectsToMap(this.throwableObjects);
     this.addToMap(this.character);
 
     // translate() needs two arguments, so we have to set the tanslation of the y-axis to 0

@@ -39,7 +39,12 @@ class MovableObject extends DrawableObject {
    * @returns true if character is not on the ground
    */
   isAboveGround(){
-    return this.y < 140;
+    if(this instanceof ThrowableObject){    
+      return true;      // throwable objects should always fall
+      //return this.y < 320;  // bottle lands on the ground
+    } else {
+      return this.y < 140;
+    }
   }
 
   
