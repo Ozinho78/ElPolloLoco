@@ -17,6 +17,9 @@ class World {
   statusBarBottles = new StatusBarBottles();
   //throwableObjects = [new ThrowableObject()];
   throwableObjects = [];
+  coinsMax = this.level.coins.length;
+  coinCounter = 0;
+
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -74,6 +77,10 @@ class World {
         let idx = this.level.coins.indexOf(coin);
         this.level.coins.splice(idx, 1);  // cuts coin from array with the specific index
         this.character.collectCoin(); // increases coin counter and plays sound
+        let pct = (this.character.coin_counter / this.coinsMax) * 100;
+        //console.log('Prozent', pct);
+        //console.log('Coins', this.character.coinCounter);
+        this.statusBarCoins.setPercentage(pct);
         //console.log('Collision with dinerito ', coin);
       }
     });

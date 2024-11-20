@@ -40,11 +40,14 @@ level1 = new Level(
     new Endboss()
   ],
   [
+    new Coin(-400, 320),
+    new Coin(-300, 320),
+    new Coin(-200, 320),
     new Coin(250, 100),
     new Coin(320, 100),
-    new Coin(380, 100),
-    new Coin(450, 100),
-    new Coin(510, 100)
+    new Coin(390, 100),
+    new Coin(460, 100),
+    new Coin(530, 100)
   ]
 );
 }

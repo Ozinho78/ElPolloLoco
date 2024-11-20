@@ -9,6 +9,7 @@ class Coin extends MovableObject {
     right: 60
   }
   offsetY = 0;
+  coinCounter = 0;
 
   IMAGES_COIN = [
     './img/8_coin/coin_1.png',
