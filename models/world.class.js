@@ -52,8 +52,8 @@ class World {
 
   checkThrowObjects(){
     if(this.keyboard.SPACE){
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
-      this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
+      //let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
+      //this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
 
     }
   }
