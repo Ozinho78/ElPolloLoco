@@ -35,7 +35,12 @@ level1 = new Level(
   ],
   [
     new Chicken(),    // creates new objects from class Chicken and loads constructor, writes objects into array
+    new Chick(),
     new Chicken(),
+    new Chick(),
+    new Chicken(),
+    new Chick(),
+    new Chick(),
     new Chicken(),
     new Endboss()
   ],
@@ -48,6 +53,9 @@ level1 = new Level(
     new Coin(390, 100),
     new Coin(460, 100),
     new Coin(530, 100)
+  ],
+  [
+    new ThrowableObject()
   ]
 );
 }

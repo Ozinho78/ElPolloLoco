@@ -23,9 +23,11 @@ class Character extends MovableObject {
   idleTime = 0;
   timeDiff;
   coin_counter = 0;
+  bottle_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');
   sound_snoring = new Audio('./audio/snore.mp3');
   sound_collected_coin = new Audio('./audio/collected-coin.mp3');  
+  sound_collected_bottle = new Audio('./audio/collected-bottle.mp3');
 
 
   constructor(){
@@ -164,8 +166,6 @@ class Character extends MovableObject {
   }
 
 
-
-
   /**
    * Increase coin counter and plays sound effect
    */
@@ -174,4 +174,12 @@ class Character extends MovableObject {
     this.sound_collected_coin.play();
   }
   
+
+  /**
+   * Increase bottle counter and plays sound effect
+   */
+  collectBottle(){
+    this.bottle_counter += 1;
+    this.sound_collected_bottle.play();
+  }
 }
