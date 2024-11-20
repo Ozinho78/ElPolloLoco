@@ -18,7 +18,7 @@ class World {
   //throwableObjects = [new ThrowableObject()];
   throwableObjects = [];
   coinsMax = this.level.coins.length;
-  //bottleMax = this.level.throwableObjects.length;
+  bottleMax = this.level.throwableObjects.length;
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -52,8 +52,9 @@ class World {
 
   checkThrowObjects(){
     if(this.keyboard.SPACE){
-      //let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
-      //this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
+      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
+      this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
+
     }
   }
 
@@ -83,6 +84,15 @@ class World {
         //console.log('Collision with dinerito ', coin);
       }
     });
+    this.level.throwableObjects.forEach((bottle) => { // loops through all enemies in level and checks for collision with character
+      if(this.character.isColliding(bottle)){
+        let idx = this.level.coins.indexOf(bottle);
+        this.level.throwableObjects.splice(idx, 1);  // cuts coin from array with the specific index
+        this.character.collectBottle(); // increases bottle counter and plays sound
+        let pct = (this.character.bottle_counter / this.bottleMax) * 100;
+        this.statusBarBottles.setPercentage(pct);
+      }
+    });
   }
 
 
@@ -105,8 +115,8 @@ class World {
 
     this.ctx.translate(this.cameraX, 0);
     this.addObjectsToMap(this.level.coins);
+    this.addObjectsToMap(this.level.throwableObjects);
     this.addObjectsToMap(this.level.enemies);
-    this.addObjectsToMap(this.throwableObjects);
     this.addToMap(this.character);
 
     // translate() needs two arguments, so we have to set the tanslation of the y-axis to 0

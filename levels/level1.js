@@ -55,7 +55,10 @@ level1 = new Level(
     new Coin(530, 100)
   ],
   [
-    new ThrowableObject()
+    new ThrowableObject(250, 350),
+    new ThrowableObject(300, 350),
+    new ThrowableObject(350, 350),
+    new ThrowableObject(400, 350)
   ]
 );
 }
