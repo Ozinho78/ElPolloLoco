@@ -1,7 +1,13 @@
 class Bottle extends MovableObject {
   // original size 400 x 400px
-    
   IMAGES_BOTTLE_ON_GROUND = BOTTLE_IMAGES['IMAGES_BOTTLE_ON_GROUND'];
+  offset = {
+      top: 11,
+      left: 28,
+      right: 28,
+      bottom: 7
+  };
+  offsetY = 0;
   
   constructor(x, y){
     super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
@@ -21,5 +27,5 @@ class Bottle extends MovableObject {
       this.currentImage++;
     }, 500);
   }
-  
+
 }

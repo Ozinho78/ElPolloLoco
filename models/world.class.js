@@ -18,7 +18,7 @@ class World {
   //throwableObjects = [new ThrowableObject()];
   throwableObjects = [];
   coinsMax = this.level.coins.length;
-  bottleMax = this.level.bottles.length;
+  bottlesMax = this.level.bottles.length;
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -50,14 +50,16 @@ class World {
   }
 
 
+  /**
+   * Checks if throwing key was pressed and throws bottle if available
+   */
   checkThrowObjects(){
     if(this.keyboard.SPACE && this.character.bottle_counter > 0){
       console.log('Throwing...');
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
       this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
       this.character.bottle_counter--;
-      let pct = (this.character.bottle_counter / this.bottleMax) * 100;
-      this.statusBarBottles.setPercentage(pct);
+      this.updateBottleStatusBar;
     }
   }
 
@@ -80,11 +82,7 @@ class World {
         let idx = this.level.coins.indexOf(coin);
         this.level.coins.splice(idx, 1);  // cuts coin from array with the specific index
         this.character.collectCoin(); // increases coin counter and plays sound
-        let pct = (this.character.coin_counter / this.coinsMax) * 100;
-        //console.log('Prozent', pct);
-        //console.log('Coins', this.character.coinCounter);
-        this.statusBarCoins.setPercentage(pct);
-        //console.log('Collision with dinerito ', coin);
+        this.updateStatusBar(this.character.coin_counter, this.coinsMax, this.statusBarCoins);
       }
     });
     this.level.bottles.forEach((bottle) => { // loops through all enemies in level and checks for collision with character
@@ -92,12 +90,20 @@ class World {
         let idx = this.level.bottles.indexOf(bottle);
         this.level.bottles.splice(idx, 1);  // cuts coin from array with the specific index
         this.character.collectBottle(); // increases bottle counter and plays sound
-        let pct = (this.character.bottle_counter / this.bottleMax) * 100;
-        this.statusBarBottles.setPercentage(pct);
+        this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
       }
     });
   }
 
+
+  /**
+   * Updates the status bar
+   */
+  updateStatusBar(counter, max, bar){
+    let pct = (counter / max) * 100;
+    bar.setPercentage(pct);
+  }
+  
 
   /**
   * Draws the images on the canvas
@@ -119,6 +125,7 @@ class World {
     this.ctx.translate(this.cameraX, 0);
     this.addObjectsToMap(this.level.coins);
     this.addObjectsToMap(this.level.bottles);
+    this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.level.enemies);
     this.addToMap(this.character);
 

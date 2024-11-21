@@ -26,7 +26,6 @@ class Chick extends MovableObject {
     this.loadImages(this.IMAGES_WALKING);   // weil super() nur einmal aufgerufen werden kann
     this.x = 250 + Math.random() * 2000;   // random x position between 200 and 700 for every chicken
     this.speed = 0.15 + Math.random() * 0.25; // for random chicken speed
-
     this.animate();
   }
 
