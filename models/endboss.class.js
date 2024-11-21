@@ -6,11 +6,11 @@ class Endboss extends MovableObject {
   width = 314;
   height = 365;
   firstContact = false;
-  IMAGES_WALK = endboss_images['IMAGES_WALK'];
-  IMAGES_ALERT = endboss_images['IMAGES_ALERT'];
-  IMAGES_ATTACK = endboss_images['IMAGES_ATTACK'];
-  IMAGES_HURT = endboss_images['IMAGES_HURT'];
-  IMAGES_DEAD = endboss_images['IMAGES_DEAD'];
+  IMAGES_WALK = ENDBOSS_IMAGES['IMAGES_WALK'];
+  IMAGES_ALERT = ENDBOSS_IMAGES['IMAGES_ALERT'];
+  IMAGES_ATTACK = ENDBOSS_IMAGES['IMAGES_ATTACK'];
+  IMAGES_HURT = ENDBOSS_IMAGES['IMAGES_HURT'];
+  IMAGES_DEAD = ENDBOSS_IMAGES['IMAGES_DEAD'];
 
   constructor(){
     //const scaleFactor = 0.3;
