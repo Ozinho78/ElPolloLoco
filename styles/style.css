@@ -36,7 +36,6 @@ button {
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
-  gap: 120px;
 }
 
 .play-btn {
