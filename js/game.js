@@ -14,8 +14,10 @@ console.log(screen.orientation.angle);
 function init(){
   let mobileHudRef = document.getElementById('mobile_hud');
   let desktopHudRef = document.getElementById('desktop_hud');
+  let headlineRef = document.getElementById('headline');
   getSoundProperties();
   if(isMobile()){
+    headlineRef.classList.add('d-none');
     mobileHudRef.classList.remove('d-none');
     getTouchListeners();
   } else {
