@@ -4,6 +4,7 @@ let startScreen = document.getElementById('start_screen');
 let world;
 let keyboard = new Keyboard(); // Create a new Keyboard object
 let bg_sound = new Audio();
+let fullScreenCheck = false;
 
 console.log(screen.orientation.angle);
 
@@ -27,6 +28,54 @@ function init(){
 }
 
 
+/**
+ * Checks if already in full screen mode and exists or enters full screen
+ */
+function fullScreen(){
+  let startScreenRef = document.getElementById('start_screen');
+  let fullScreenRef = document.getElementById('fullscreen');
+  if(!fullScreenCheck){
+    enterFullScreen(startScreenRef);
+    enterFullScreen(fullScreenRef);
+    fullScreenCheck = true;
+  } else {
+    exitFullScreen(startScreenRef);
+    exitFullScreen(fullScreenRef);
+    fullScreenCheck = false;
+  }
+}
+
+
+/**
+ * Enters full screen mode depending on browser
+ * @param {element} element document element that should be full screened
+ */
+function enterFullScreen(element){
+  if(element.requestFullscreen){
+    element.requestFullscreen();
+  } else if(element.msRequestFullscreen){     // for IE11 (remove June 15, 2022)
+    element.msRequestFullscreen();
+  } else if(element.webkitRequestFullscreen){ // iOS Safari
+    element.webkitRequestFullscreen();
+  }
+}
+
+
+/**
+ * Exits full screen mode depending on browser
+ */
+function exitFullScreen(){
+  if(document.exitFullscreen){
+    document.exitFullscreen();
+  } else if(document.webkitExitFullscreen){
+    document.webkitExitFullscreen();
+  }
+}
+
+
+/**
+ * Toggles background music
+ */
 function toggleBgMusic(){
   let soundOn = document.getElementById('sound_on_icon');
   let soundOff = document.getElementById('sound_off_icon');
@@ -61,7 +110,11 @@ function startGame() {
     startScreen.classList.add('d-none');
     canvas.classList.remove('d-none');
     initLevel1();
-    world = new World(canvas, keyboard);
+    if(fullScreenCheck){
+      world = new World(canvas, keyboard);
+    } else {
+      world = new World(canvas, keyboard);
+    }
 }
 
 
@@ -158,4 +211,3 @@ function getTouchListeners(){
     keyboard.SPACE = false;
   });
 }
-

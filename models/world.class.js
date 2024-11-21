@@ -72,8 +72,15 @@ class World {
       if(this.character.isColliding(enemy)){
         //console.log('Collision with character ', enemy);
         //this.level.enemies.pop(enemy);
-        this.character.isHit();
-        this.statusBarHealth.setPercentage(this.character.energy);
+        if((this.character.isAboveGround()) && (this.character.speedY < 0)){
+          let idx = this.level.enemies.indexOf(enemy);
+          this.level.enemies.splice(idx, 1);  // cuts enemy from array with the specific index
+          console.log('Draufgesprungen...');
+        } else {
+          this.character.isHit();
+          this.statusBarHealth.setPercentage(this.character.energy);  
+          console.log('Verletzt...');
+        }
         console.log(this.character.energy);
       };
     });

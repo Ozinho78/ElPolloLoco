@@ -34,47 +34,48 @@
 </head>
 <body onload="init()">
 
-  <h1 id="headline">El Pollo Loco</h1>
+    <h1 id="headline">El Pollo Loco</h1>
 
-  
-  <div id="start_screen" class="start-screen">
-    <button class="play-btn" onclick="startGame()">¡Vamos a jugar!</button>
-    <img id="sound_on_icon" class="d-none sound-on" src="./icons/icons8-musik-80.png" alt="Music On" title="Music On" onclick="toggleBgMusic()">
-    <img id="sound_off_icon" class="sound-off" src="./icons/icons8-music-off-96.png" alt="Music Off" title="Music Off" onclick="toggleBgMusic()">
-    <a href="./datenschutz.html" target="_blank"><img class="info-icon" src="./icons/icons8-info-100.png" alt="Question" title="Page Info"></a>
-  </div>
-  
-  <canvas id="canvas" class="d-none" width="720" height="480"></canvas>
-  <!-- <canvas id="canvas" class="" width="720" height="480"></canvas> -->
+    <div id="start_screen" class="start-screen">
+      <button class="play-btn" onclick="startGame()">¡Vamos a jugar!</button>
+      <img id="sound_on_icon" class="d-none sound-on" src="./icons/icons8-musik-80.png" alt="Music On" title="Music On" onclick="toggleBgMusic()">
+      <img id="sound_off_icon" class="sound-off" src="./icons/icons8-music-off-96.png" alt="Music Off" title="Music Off" onclick="toggleBgMusic()">
+      <img class="fullscreen-icon" src="./icons/icons8-vollbild-64.png" alt="Fullscreen" onclick="fullScreen()">
+      <a href="./datenschutz.html" target="_blank"><img class="info-icon" src="./icons/icons8-info-100.png" alt="Question" title="Page Info"></a>
+    </div>
+    
+    <div id="fullscreen">
+      <canvas id="canvas" class="d-none" width="720" height="480"></canvas>
+    </div>
+    
+    <div id="mobile_hud" class="button-wrapper d-none">
+      <div class="panel-top"></div>
 
-  <div id="mobile_hud" class="button-wrapper d-none">
-    <div class="panel-top"></div>
-
-    <div class="panel-bottom">
-      <div class="panel-bottom-left">
-        <button id="btnLeft"><img src="./icons/icons8-links-50.png" alt="Arrow Left"></button>
-        <button id="btnRight"><img src="./icons/icons8-rechts-50.png" alt="Arrow Right"></button>
-      </div>
-      <div class="panel-bottom-right">
-        <button id="btnUp"><img src="./icons/icons8-oben-50.png" alt="Arrow Up"></button>
-        <button id="btnJump"><img src="./icons/icons8-gebogener-pfeil-64.png" alt="Arrow Curved"></button>
+      <div class="panel-bottom">
+        <div class="panel-bottom-left">
+          <button id="btnLeft"><img src="./icons/icons8-links-50.png" alt="Arrow Left"></button>
+          <button id="btnRight"><img src="./icons/icons8-rechts-50.png" alt="Arrow Right"></button>
+        </div>
+        <div class="panel-bottom-right">
+          <button id="btnUp"><img src="./icons/icons8-oben-50.png" alt="Arrow Up"></button>
+          <button id="btnJump"><img src="./icons/icons8-gebogener-pfeil-64.png" alt="Arrow Curved"></button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="desktop_hud" class="d-none">
-    <div class="howtoplay">
-      <div>
-        <h3>Arrows Left/Right = Walk</h3>
-      </div>
-      <div>
-        <h3>Arrow Up = Jump</h3>
-      </div>
-      <div>
-        <h3>Space = Throw Bottle</h3>
+    <div id="desktop_hud" class="d-none">
+      <div class="howtoplay">
+        <div>
+          <h3>Arrows Left/Right = Walk</h3>
+        </div>
+        <div>
+          <h3>Arrow Up = Jump</h3>
+        </div>
+        <div>
+          <h3>Space = Throw Bottle</h3>
+        </div>
       </div>
     </div>
-  </div>
 
 
 </body>

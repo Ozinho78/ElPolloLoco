@@ -70,6 +70,14 @@ button {
   width: 30px;
 }
 
+.fullscreen-icon {
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  right: 60px;
+  width: 30px;
+}
+
 .panel-bottom {
   display: flex;
   width: 720px;

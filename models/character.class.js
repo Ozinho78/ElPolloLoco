@@ -22,6 +22,7 @@ class Character extends MovableObject {
   speed = 10;
   idleTime = 0;
   timeDiff;
+  energy = 1000;
   coin_counter = 0;
   bottle_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');
@@ -146,7 +147,7 @@ class Character extends MovableObject {
     let intervalIdle =
       setInterval(() => {
         this.playAnimation(arr);
-        this.sound_snoring.play();
+        //this.sound_snoring.play();
         if(this.validKeyPressed()){
           clearInterval(intervalIdle);
           this.sound_snoring.pause();
