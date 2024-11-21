@@ -25,7 +25,7 @@ class Character extends MovableObject {
   coin_counter = 0;
   bottle_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');
-  sound_snoring = new Audio('./audio/snore.mp3');
+  sound_snoring = new Audio('./audio/snoring7s.mp3');
   sound_collected_coin = new Audio('./audio/collected-coin.mp3');  
   sound_collected_bottle = new Audio('./audio/collected-bottle.mp3');
 
@@ -118,10 +118,10 @@ class Character extends MovableObject {
 
       // Interval for supervising the idle time
       setInterval(() => {
-        if((this.idleTime >= 10) && (this.idleTime < 15)){
+        if((this.idleTime >= 5) && (this.idleTime < 10)){
           this.playIdleAnimation(this.IMAGES_IDLE);
         }
-        if(this.idleTime >= 15){
+        if(this.idleTime >= 10){
           this.playIdleAnimation(this.IMAGES_LONG_IDLE);
         }
         //console.log(this.idleTime);
@@ -146,20 +146,10 @@ class Character extends MovableObject {
     let intervalIdle =
       setInterval(() => {
         this.playAnimation(arr);
-        // let promise = this.sound_snoring.play();
-        // if (promise !== undefined) {
-        //   promise.then(_ => {
-        //     this.sound_snoring.play();
-        //   }).catch(error => {
-        //     // Autoplay was prevented.
-        //     // Show a "Play" button so that user can start playback.
-        //     // console.warn('Please interact first to hear Pepe snoring!');
-        //     // alert('Please interact first to hear Pepe snoring!');
-        //   });
-        // }
+        this.sound_snoring.play();
         if(this.validKeyPressed()){
           clearInterval(intervalIdle);
-          // this.sound_snoring.pause();
+          this.sound_snoring.pause();
           this.loadImage('./img/2_character_pepe/2_walk/W-21.png');
         }
       }, 500);

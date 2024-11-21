@@ -36,8 +36,11 @@
 
   <h1>El Pollo Loco</h1>
 
-  <div onclick="startGame()">
-    <img id="start_screen" class="start-screen" src="./img/9_intro_outro_screens/start/startscreen_1.png" alt="Start-Screen">
+  
+  <div id="start_screen" class="start-screen">
+    <button class="play-btn" onclick="startGame()">¡Vamos a jugar!</button>
+    <img id="sound_on_icon" class="d-none" src="./icons/icons8-musik-80.png" alt="Music On" title="Music On" onclick="toggleBgMusic()">
+    <img id="sound_off_icon" class="" src="./icons/icons8-music-off-96.png" alt="Music Off" title="Music Off" onclick="toggleBgMusic()">
   </div>
   
   <canvas id="canvas" class="d-none" width="720" height="480"></canvas>
@@ -64,13 +67,14 @@
         <h3>Arrows Left/Right = Walk</h3>
       </div>
       <div>
-        <h3>Arrows Up = Jump</h3>
+        <h3>Arrow Up = Jump</h3>
       </div>
       <div>
         <h3>Space = Throw Bottle</h3>
       </div>
     </div>
   </div>
+
 
 </body>
 </html>

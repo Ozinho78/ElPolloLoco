@@ -3,15 +3,18 @@ let startScreen = document.getElementById('start_screen');
 // let ctx;   // has been declared in class World where canvas was overgiven as parameter into constructor
 let world;
 let keyboard = new Keyboard(); // Create a new Keyboard object
-
+let bg_sound = new Audio();
 
 console.log(screen.orientation.angle);
 
 
-
+/**
+ * Checks if user has a mobile device or not, adjusts start screen and loads listeners
+ */
 function init(){
   let mobileHudRef = document.getElementById('mobile_hud');
   let desktopHudRef = document.getElementById('desktop_hud');
+  getSoundProperties();
   if(isMobile()){
     mobileHudRef.classList.remove('d-none');
     getTouchListeners();
@@ -22,6 +25,29 @@ function init(){
 }
 
 
+function toggleBgMusic(){
+  let soundOn = document.getElementById('sound_on_icon');
+  let soundOff = document.getElementById('sound_off_icon');
+  soundOn.classList.toggle('d-none');
+  soundOff.classList.toggle('d-none');
+  if(soundOff.classList.contains('d-none')){
+    bg_sound.play();
+  } else {
+    bg_sound.pause();
+  }
+}
+
+
+/**
+ * Get and set background sound properties
+ */
+function getSoundProperties(){
+  bg_sound = new Audio('./audio/LaCucaracha.mp3');
+  bg_sound.loop = true;
+  bg_sound.volume = 0.3;
+}
+
+
 /**
  * Starts the game by clicking on the start screen
  */
@@ -29,6 +55,7 @@ function startGame() {
   //if (isMobile()){alert('Mobile');} else {alert('Not Mobile');}
   // const screenAngle = screen.orientation.angle;
   // if(screenAngle == 0){
+    bg_sound.pause();
     startScreen.classList.add('d-none');
     canvas.classList.remove('d-none');
     initLevel1();

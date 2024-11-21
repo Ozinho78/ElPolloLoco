@@ -55,11 +55,11 @@ class World {
    */
   checkThrowObjects(){
     if(this.keyboard.SPACE && this.character.bottle_counter > 0){
-      console.log('Throwing...');
+      //console.log('Throwing...');
       let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
       this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
       this.character.bottle_counter--;
-      this.updateBottleStatusBar;
+      this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
     }
   }
 
