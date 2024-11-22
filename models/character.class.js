@@ -81,14 +81,14 @@ class Character extends MovableObject {
         if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){      // usage of variable level from class World, alternatively level1.level_end_x
           this.moveRight()      // exported to movable-object-class
           this.otherDirection = false;
-          this.sound_walking.play();
+          if(inGameSoundOn){this.sound_walking.play();}
           this.resetIdleTimeGetNewTime();
         }
         
         if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
           this.moveLeft();      // exported to movable-object-class
           this.otherDirection = true;
-          this.sound_walking.play();
+          if(inGameSoundOn){this.sound_walking.play();}
           this.resetIdleTimeGetNewTime();
         }
 
@@ -162,7 +162,9 @@ class Character extends MovableObject {
    */
   collectCoin(){
     this.coin_counter += 1;
-    this.sound_collected_coin.play();
+    if(inGameSoundOn){
+      this.sound_collected_coin.play();
+    }
   }
   
 
@@ -171,6 +173,8 @@ class Character extends MovableObject {
    */
   collectBottle(){
     this.bottle_counter += 1;
-    this.sound_collected_bottle.play();
+    if(inGameSoundOn){
+      this.sound_collected_bottle.play();
+    }
   }
 }

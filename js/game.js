@@ -5,6 +5,7 @@ let world;
 let keyboard = new Keyboard(); // Create a new Keyboard object
 let bg_sound = new Audio();
 let fullScreenCheck = false;
+let inGameSoundOn = false;
 
 console.log(screen.orientation.angle);
 
@@ -83,8 +84,22 @@ function toggleBgMusic(){
   soundOff.classList.toggle('d-none');
   if(soundOff.classList.contains('d-none')){
     bg_sound.play();
+    //inGameSoundOn = true;
   } else {
     bg_sound.pause();
+    //inGameSoundOn = false;
+  }
+}
+
+function toggleGameMusic(){
+  let soundOnCanvas = document.getElementById('sound_on_icon_canvas');
+  let soundOffCanvas = document.getElementById('sound_off_icon_canvas');
+  soundOnCanvas.classList.toggle('d-none');
+  soundOffCanvas.classList.toggle('d-none');
+  if(soundOffCanvas.classList.contains('d-none')){
+    inGameSoundOn = true;
+  } else {
+    inGameSoundOn = false;
   }
 }
 

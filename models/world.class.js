@@ -56,7 +56,14 @@ class World {
   checkThrowObjects(){
     if(this.keyboard.SPACE && this.character.bottle_counter > 0){
       //console.log('Throwing...');
-      let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);     // adds a bottle at character's position
+      let adjustThrow;
+      let bottle;
+      if(this.character.otherDirection){
+        bottle = new ThrowableObject(this.character.x, this.character.y + 100);
+      } 
+      else {
+        bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);      // adds a bottle at character's position
+      } 
       this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
       this.character.bottle_counter--;
       this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
