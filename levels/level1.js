@@ -61,6 +61,10 @@ level1 = new Level(
     new Coin(530, 100)
   ],
   [
+    new Bottle(-350, 350),
+    new Bottle(-250, 350),
+    new Bottle(-150, 350),
+    new Bottle(50, 350),
     new Bottle(250, 350),
     new Bottle(300, 350),
     new Bottle(350, 350),
@@ -68,7 +72,11 @@ level1 = new Level(
     new Bottle(1000, 350),
     new Bottle(1100, 350),
     new Bottle(1200, 350),
-    new Bottle(1300, 350)
+    new Bottle(1300, 350),
+    new Bottle(1400, 350),
+    new Bottle(1500, 350),
+    new Bottle(1600, 350),
+    new Bottle(1700, 350)
   ]
 );
 }

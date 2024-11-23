@@ -46,6 +46,7 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkThrowObjects();
+      this.checkCollisionsBottleEnemy();
     }, 200);
   }
 
@@ -103,6 +104,19 @@ class World {
       }
     });
   }
+
+
+  checkCollisionsBottleEnemy(){
+    this.throwableObjects.forEach((throwable) => {
+        this.level.enemies.forEach((enemy) => {
+            let i = this.level.enemies.indexOf(enemy);
+            if (enemy.isColliding(throwable)) {
+                console.log('Hühnchen getroffen...');
+            }
+        });
+    });
+  }
+
 
 
   /**

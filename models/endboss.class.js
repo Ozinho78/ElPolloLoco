@@ -5,6 +5,13 @@ class Endboss extends MovableObject {
   y = 90;
   width = 314;
   height = 365;
+  offset = {
+    top: 39,
+    left: 36,
+    bottom: 16,
+    right: 26
+  }
+  offsetY = 0;
   firstContact = false;
   IMAGES_WALK = ENDBOSS_IMAGES['IMAGES_WALK'];
   IMAGES_ALERT = ENDBOSS_IMAGES['IMAGES_ALERT'];

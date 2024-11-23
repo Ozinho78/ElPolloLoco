@@ -54,12 +54,12 @@ class DrawableObject {
    * @param {context} ctx - context, contains methods to draw objects on canvas
    */
    drawFrame(ctx){
-    if((this instanceof Character) || (this instanceof Chicken)){   // draws frame only for character and chicken objects
-      /*ctx.beginPath();
+    if((this instanceof Character) || (this instanceof Chicken) || (this instanceof Chick) || (this instanceof Endboss)){   // draws frame only for character and chicken objects
+      ctx.beginPath();
       ctx.lineWidth = "2";
       ctx.strokeStyle = "blue";
       ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();*/
+      ctx.stroke();
     }
   }
 
