@@ -9,8 +9,6 @@ class ThrowableObject extends MovableObject {
     bottom: 0,
     left: 0
   };
-  otherDirection = false;
-
 
   constructor(x, y){
     super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
@@ -36,8 +34,7 @@ class ThrowableObject extends MovableObject {
 
 
   throwBottle(){
-    //this.speedY = 30;
-    this.speedY = 20;
+    this.speedY = 20;     // this.speedY = 30;
     this.applyGravity();
     this.otherDirection = world.character.otherDirection;
     setInterval(() => {

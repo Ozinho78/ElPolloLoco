@@ -72,12 +72,14 @@ class World {
    */
   checkCollisions(){
     this.level.enemies.forEach((enemy) => { // loops through all enemies in level and checks for collision with character
-      if(this.character.isColliding(enemy)){
-        //console.log('Collision with character ', enemy);
-        //this.level.enemies.pop(enemy);
+      let idx = this.level.enemies.indexOf(enemy);
+      if(this.character.isColliding(enemy) && (this.level.enemies[idx].alive)){
         if((this.character.isAboveGround()) && (this.character.speedY < 0)){
-          let idx = this.level.enemies.indexOf(enemy);
-          this.level.enemies.splice(idx, 1);  // cuts enemy from array with the specific index
+          //this.level.enemies.splice(idx, 1);  // cuts enemy from array with the specific index
+          this.level.enemies[idx].alive = false;
+          clearInterval(this.level.enemies[idx].intervalIds[0]);
+          clearInterval(this.level.enemies[idx].intervalIds[1]);
+          this.level.enemies[idx].loadImage(this.level.enemies[idx].IMAGES_DEAD);
           console.log('Draufgesprungen...');
         } else {
           this.character.isHit();
@@ -106,11 +108,18 @@ class World {
   }
 
 
+  /**
+   * Checks collision between bottle and enemy
+   */
   checkCollisionsBottleEnemy(){
     this.throwableObjects.forEach((throwable) => {
         this.level.enemies.forEach((enemy) => {
-            let i = this.level.enemies.indexOf(enemy);
+            let idxEnemy = this.level.enemies.indexOf(enemy);
             if (enemy.isColliding(throwable)) {
+                enemy.alive = false;
+                //this.level.enemies[idxEnemy].loadImage(IMAGES_DEAD);
+                //enemy[idxEnemy].speed = 0;
+                //level.enemy[idxEnemy].
                 console.log('Hühnchen getroffen...');
             }
         });
