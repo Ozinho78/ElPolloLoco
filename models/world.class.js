@@ -116,20 +116,23 @@ class World {
    */
   checkCollisionsBottleEnemy(){
     this.throwableObjects.forEach((throwable) => {
-        this.level.enemies.forEach((enemy) => {
-            let idxEnemy = this.level.enemies.indexOf(enemy);
-            if (enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive)) {
-              if(enemy instanceof Endboss){
-                console.log('Riesenhühnchen getroffen...');
-              } else {
-                this.level.enemies[idxEnemy].alive = false;
-                clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
-                clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
-                this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
-                console.log('Hühnchen getroffen...');
-              }
-            }
-        });
+      let idxThrow = this.throwableObjects.indexOf(throwable);
+      this.level.enemies.forEach((enemy) => {
+        let idxEnemy = this.level.enemies.indexOf(enemy);
+        if (enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive)) {
+          if(enemy instanceof Endboss){
+            console.log('Riesenhühnchen getroffen...');
+          } else {
+            this.level.enemies[idxEnemy].alive = false;
+            clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
+            clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
+            this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
+            console.log('Hühnchen getroffen...');
+            clearInterval(this.throwableObjects[idxThrow].intervalIds[0]);
+            this.throwableObjects[idxThrow].playAnimation(this.throwableObjects[idxThrow].IMAGES_SPLASH);
+          }
+        }
+      });
     });
   }
 

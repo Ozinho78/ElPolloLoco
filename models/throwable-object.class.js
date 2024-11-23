@@ -1,7 +1,7 @@
 class ThrowableObject extends MovableObject {
 // original size 400 x 400px  
-  IMAGES_SPLASH = BOTTLE_IMAGES['IMAGES_SPLASH'];
   IMAGES_ROTATION = BOTTLE_IMAGES['IMAGES_ROTATION'];
+  IMAGES_SPLASH = BOTTLE_IMAGES['IMAGES_SPLASH'];
   otherDirection = false;
   offset = {
     top: 0,
@@ -22,14 +22,13 @@ class ThrowableObject extends MovableObject {
     this.throwBottle();
   }
 
-  animate(){
-    setInterval(() => {
-      let i = this.currentImage % this.IMAGES_ROTATION.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
-      let path = this.IMAGES_ROTATION[i];
+  animate(arr){
+    setInterval((arr) => {
+      let i = this.currentImage % arr.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+      let path = arr[i];
       this.img = this.imageCache[path];
       this.currentImage++;
-    }, 500);
-    
+    }, 500);  
   }
 
 
@@ -38,15 +37,15 @@ class ThrowableObject extends MovableObject {
     this.speedY = 20;     // this.speedY = 30;
     this.applyGravity();
     this.otherDirection = world.character.otherDirection;
-    let idx = setInterval(() => {
+    let id = setInterval(() => {
       this.playAnimation(this.IMAGES_ROTATION);
       if(!this.otherDirection){
         this.x += 20;
       } else {
         this.x -= 20;
       }
-    }, 50)
-    this.intervalIds.push[idx];
+    }, 50);
+    this.intervalIds.push(id);
   };
 
 }
