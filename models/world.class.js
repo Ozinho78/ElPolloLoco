@@ -45,8 +45,10 @@ class World {
   run(){
     setInterval(() => {
       this.checkCollisions();
-      this.checkThrowObjects();
       this.checkCollisionsBottleEnemy();
+    }, 50);
+    setInterval(() => {
+      this.checkThrowObjects();
     }, 200);
   }
 
@@ -55,13 +57,14 @@ class World {
    * Checks if throwing key was pressed and throws bottle if available
    */
   checkThrowObjects(){
-    if(this.keyboard.SPACE && this.character.bottle_counter > 0){
+    if((this.keyboard.SPACE) && (this.character.bottle_counter) > 0){
       //console.log('Throwing...');
       let adjustThrow = 0;
       if(!this.character.otherDirection){adjustThrow = 100;}
       let bottle = new ThrowableObject(this.character.x + adjustThrow, this.character.y + 100);      // adds a bottle at character's position
       this.throwableObjects.push(bottle);   // adds bottle to array of throwable objects
       this.character.bottle_counter--;
+      console.log('Bottles left', this.character.bottle_counter);
       this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
     }
   }
@@ -84,9 +87,9 @@ class World {
         } else {
           this.character.isHit();
           this.statusBarHealth.setPercentage(this.character.energy);  
-          console.log('Verletzt...');
+          //console.log('Verletzt...');
         }
-        console.log(this.character.energy);
+        //console.log(this.character.energy);
       };
     });
     this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
@@ -115,12 +118,16 @@ class World {
     this.throwableObjects.forEach((throwable) => {
         this.level.enemies.forEach((enemy) => {
             let idxEnemy = this.level.enemies.indexOf(enemy);
-            if (enemy.isColliding(throwable)) {
-                enemy.alive = false;
-                //this.level.enemies[idxEnemy].loadImage(IMAGES_DEAD);
-                //enemy[idxEnemy].speed = 0;
-                //level.enemy[idxEnemy].
+            if (enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive)) {
+              if(enemy instanceof Endboss){
+                console.log('Riesenhühnchen getroffen...');
+              } else {
+                this.level.enemies[idxEnemy].alive = false;
+                clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
+                clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
+                this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
                 console.log('Hühnchen getroffen...');
+              }
             }
         });
     });

@@ -46,4 +46,5 @@ class Chick extends MovableObject {
     this.intervalIds.push(id2);
   }
   
+  
 }

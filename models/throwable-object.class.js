@@ -29,6 +29,7 @@ class ThrowableObject extends MovableObject {
       this.img = this.imageCache[path];
       this.currentImage++;
     }, 500);
+    
   }
 
 
@@ -37,7 +38,7 @@ class ThrowableObject extends MovableObject {
     this.speedY = 20;     // this.speedY = 30;
     this.applyGravity();
     this.otherDirection = world.character.otherDirection;
-    setInterval(() => {
+    let idx = setInterval(() => {
       this.playAnimation(this.IMAGES_ROTATION);
       if(!this.otherDirection){
         this.x += 20;
@@ -45,6 +46,7 @@ class ThrowableObject extends MovableObject {
         this.x -= 20;
       }
     }, 50)
+    this.intervalIds.push[idx];
   };
 
 }
