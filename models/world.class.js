@@ -129,6 +129,8 @@ class World {
             this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
             console.log('Hühnchen getroffen...');
             clearInterval(this.throwableObjects[idxThrow].intervalIds[0]);
+            this.throwableObjects[idxThrow].acceleration = 1;
+            this.throwableObjects[idxThrow].speedY = 0;
             this.throwableObjects[idxThrow].playAnimation(this.throwableObjects[idxThrow].IMAGES_SPLASH);
           }
         }

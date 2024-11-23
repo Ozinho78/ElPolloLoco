@@ -23,7 +23,7 @@ class ThrowableObject extends MovableObject {
   }
 
   animate(arr){
-    setInterval((arr) => {
+    setInterval(() => {
       let i = this.currentImage % arr.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
       let path = arr[i];
       this.img = this.imageCache[path];
