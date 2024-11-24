@@ -144,7 +144,7 @@ class World {
   checkCollisionWithEndboss(){
     this.throwableObjects.forEach((throwable) => {
       let idxThrow = this.throwableObjects.indexOf(throwable);
-      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.lastHit) > 2000)){
+      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.lastHit) > 1000)){
         this.endboss.damaged = true;
         this.lastHit = new Date().getTime();
         this.endboss.isHit(40);
@@ -153,10 +153,25 @@ class World {
         if(this.endboss.energy == 0){
           this.endboss.damaged = false;
           this.endboss.alive = false;
+          setTimeout(() => {
+            this.showWinningScreen();
+          }, 2000);
         }
         console.log('Riesenhühnchen getroffen...', this.endboss.energy);
       }
     });
+  }
+
+
+  clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  }
+
+
+  showWinningScreen(){
+    this.clearAllIntervals();
+    document.getElementById('canvas').classList.add('d-none');
+    document.getElementById('winning_screen').classList.remove('d-none');
   }
 
 
