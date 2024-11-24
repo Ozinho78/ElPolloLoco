@@ -13,6 +13,8 @@ class Endboss extends MovableObject {
   }
   offsetY = 0;
   firstContact = false;
+  energy = 100;
+  damaged = false;
   IMAGES_WALK = ENDBOSS_IMAGES['IMAGES_WALK'];
   IMAGES_ALERT = ENDBOSS_IMAGES['IMAGES_ALERT'];
   IMAGES_ATTACK = ENDBOSS_IMAGES['IMAGES_ATTACK'];
@@ -22,8 +24,11 @@ class Endboss extends MovableObject {
   constructor(){
     //const scaleFactor = 0.3;
     super().loadImage('./img/4_enemie_boss_chicken/1_walk/G1.png');
+    this.loadImages(this.IMAGES_WALK);
     this.loadImages(this.IMAGES_ALERT);
     this.loadImages(this.IMAGES_ATTACK);
+    this.loadImages(this.IMAGES_HURT);
+    this.loadImages(this.IMAGES_DEAD);
     //this.width = this.img.width * scaleFactor;
     //this.height = this.img.height * scaleFactor;
     
@@ -32,8 +37,7 @@ class Endboss extends MovableObject {
 
 
   animate(){
-    let i = 0;
-    setInterval(() => {
+    let id1 = setInterval(() => {
       if((world.character.x < 2070) && (!this.firstContact)) {
         this.playAnimation(this.IMAGES_ALERT);
       } else {
@@ -41,6 +45,20 @@ class Endboss extends MovableObject {
         this.playAnimation(this.IMAGES_ATTACK);
       }
     }, 200);
+    this.intervalIds.push[id1];
+    let id2 = setInterval(() => {
+      if(this.damaged){
+        this.playAnimation(this.IMAGES_HURT);
+      }
+    }, 200);
+    this.intervalIds.push[id2];
+  }
+
+
+  
+  bossFightHit(){
+    this.energy -= 3;
+    console.log(this.energy);
   }
 
 

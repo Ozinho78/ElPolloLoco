@@ -55,11 +55,11 @@ class DrawableObject {
    */
    drawFrame(ctx){
     if((this instanceof Character) || (this instanceof Chicken) || (this instanceof Chick) || (this instanceof Endboss)){   // draws frame only for character and chicken objects
-      ctx.beginPath();
-      ctx.lineWidth = "2";
-      ctx.strokeStyle = "blue";
-      ctx.rect(this.x, this.y, this.width, this.height);
-      ctx.stroke();
+      // ctx.beginPath();
+      // ctx.lineWidth = "2";
+      // ctx.strokeStyle = "blue";
+      // ctx.rect(this.x, this.y, this.width, this.height);
+      // ctx.stroke();
     }
   }
 

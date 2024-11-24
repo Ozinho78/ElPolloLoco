@@ -121,6 +121,9 @@ class World {
         let idxEnemy = this.level.enemies.indexOf(enemy);
         if (enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive)) {
           if(enemy instanceof Endboss){
+            clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
+            this.level.enemies[idxEnemy].damaged = true;
+            this.level.enemies[idxEnemy].bossFightHit();
             console.log('Riesenhühnchen getroffen...');
           } else {
             this.level.enemies[idxEnemy].alive = false;
@@ -129,7 +132,7 @@ class World {
             this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
             console.log('Hühnchen getroffen...');
             clearInterval(this.throwableObjects[idxThrow].intervalIds[0]);
-            this.throwableObjects[idxThrow].acceleration = 1;
+            this.throwableObjects[idxThrow].acceleration = 0.5;
             this.throwableObjects[idxThrow].speedY = 0;
             this.throwableObjects[idxThrow].playAnimation(this.throwableObjects[idxThrow].IMAGES_SPLASH);
           }
