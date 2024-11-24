@@ -37,7 +37,7 @@
 
     <h1 id="headline">El Pollo Loco</h1>
 
-    <div id="start_screen" class="start-screen">
+    <div id="start_screen" class="start-screen start-end-screen">
       <button class="play-btn" onclick="startGame()">¡Vamos a jugar!</button>
       <img id="sound_on_icon" class="d-none sound-on" src="./icons/icons8-musik-80.png" alt="Music On" title="Music On" onclick="toggleBgMusic()">
       <img id="sound_off_icon" class="sound-off" src="./icons/icons8-music-off-96.png" alt="Music Off" title="Music Off" onclick="toggleBgMusic()">
@@ -52,13 +52,20 @@
       <img id="sound_off_icon_canvas" class="d-none sound-off-canvas" src="./icons/icons8-music-off-96.png" alt="Music Off" title="Music Off" onclick="toggleGameMusic()">
     </div>
 
-    <div id="winning_screen" class="d-none winning-screen" onclick="startGame()">
-      <img src="./img/9_intro_outro_screens/win/win_1.png" alt="Winning Logo">
+    <div id="winning_screen" class="d-none winning-screen start-end-screen">
+      <img class="win-logo" src="./img/9_intro_outro_screens/win/win_1.png" alt="Winning Logo">
+      <button class="play-btn again-btn" onclick="startGame()">¡Again!</button>
+      <button class="play-btn back-btn" onclick="backToStart()">¡Back to Start!</button>
+    </div>
+
+    <div id="losing_screen" class="d-none losing-screen start-end-screen">
+      <img class="lose-logo" src="./img/9_intro_outro_screens/game_over/game over!.png" alt="Losing Logo">
+      <button class="play-btn again-btn" onclick="startGame()">¡Again!</button>
+      <button class="play-btn back-btn" onclick="backToStart()">¡Back to Start!</button>
     </div>
     
     <div id="mobile_hud" class="button-wrapper d-none">
       <div class="panel-top"></div>
-
       <div class="panel-bottom">
         <div class="panel-bottom-left">
           <button id="btnLeft"><img src="./icons/icons8-links-50.png" alt="Arrow Left"></button>
@@ -84,7 +91,6 @@
         </div>
       </div>
     </div>
-
 
 </body>
 </html>

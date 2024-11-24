@@ -22,7 +22,7 @@ class Character extends MovableObject {
   speed = 10;
   idleTime = 0;
   timeDiff;
-  energy = 1000;
+  energy = 100;
   coin_counter = 0;
   bottle_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');

@@ -123,6 +123,7 @@ function startGame() {
   // if(screenAngle == 0){
     bg_sound.pause();
     document.getElementById('winning_screen').classList.add('d-none');
+    document.getElementById('losing_screen').classList.add('d-none');
     startScreen.classList.add('d-none');
     document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
     canvas.classList.remove('d-none');
@@ -132,6 +133,11 @@ function startGame() {
     } else {
       world = new World(canvas, keyboard);
     }
+}
+
+
+function backToStart(){
+  location.reload();
 }
 
 

@@ -92,6 +92,11 @@ class World {
         } else {
           this.character.isHit(5);
           this.statusBarHealth.setPercentage(this.character.energy);  
+          if(this.character.isDead()){
+            setTimeout(() => {
+              this.showLosingScreen();
+            }, 3000);
+          }
           //console.log('Verletzt...');
         }
         console.log(this.character.energy);
@@ -150,12 +155,12 @@ class World {
         this.endboss.isHit(40);
         this.showSplashAnimation(idxThrow);
         this.statusBarEndboss.setPercentage(this.endboss.energy);
-        if(this.endboss.energy == 0){
+        if(this.endboss.isDead()){
           this.endboss.damaged = false;
           this.endboss.alive = false;
           setTimeout(() => {
             this.showWinningScreen();
-          }, 2000);
+          }, 3000);
         }
         console.log('Riesenhühnchen getroffen...', this.endboss.energy);
       }
@@ -163,15 +168,31 @@ class World {
   }
 
 
-  clearAllIntervals() {
-    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+  /**
+   * Clears all intervals without mercy
+   */
+  clearAllIntervals(){
+    for(let i = 1; i < 9999; i++) window.clearInterval(i);
   }
 
 
+  /**
+   * Shows winning screen
+   */
   showWinningScreen(){
     this.clearAllIntervals();
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('winning_screen').classList.remove('d-none');
+  }
+
+
+  /**
+   * Shows losing screen
+   */
+  showLosingScreen(){
+    this.clearAllIntervals();
+    document.getElementById('canvas').classList.add('d-none');
+    document.getElementById('losing_screen').classList.remove('d-none');
   }
 
 
@@ -302,7 +323,5 @@ class World {
     mo.x = mo.x * -1;   // reverse the x-coordinate back to normal
     this.ctx.restore();
   }
-
-
 
 }

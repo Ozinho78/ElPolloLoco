@@ -26,11 +26,14 @@ button {
   border: none;
 }
 
-.start-screen {
+h1 {
+  margin-bottom: 20px;
+}
+
+.start-end-screen {
   position: relative;
   width: 820px;
   height: 480px;
-  background-image: url('../img/9_intro_outro_screens/start/startscreen_1.png');
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -38,16 +41,12 @@ button {
   justify-content: center;
 }
 
+.start-screen {
+  background-image: url('../img/9_intro_outro_screens/start/startscreen_1.png');
+}
+
 .winning-screen {
-  position: relative;
-  width: 820px;
-  height: 480px;
   background-image: url('../img/5_background/complete_background.png');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
 }
 
 .play-btn {
@@ -64,6 +63,37 @@ button {
 
 .play-btn:hover {
   scale: 1.05;
+}
+
+.win-logo {
+  position: absolute;
+  width: 700px;
+  top: 40px;
+  margin: auto;
+}
+
+.again-btn {
+  position: absolute;
+  left: 50px;
+  bottom: 40px;
+}
+
+.back-btn {
+  position: absolute;
+  right: 50px;
+  bottom: 40px;
+}
+
+.losing-screen {
+  background-image: url('../img/5_background/complete_background.png');
+}
+
+.lose-logo {
+  position: absolute;
+  width: 820px;
+  height: 480px;
+  /* top: 40px; */
+  /* margin: auto; */
 }
 
 .sound-on, .sound-off {
