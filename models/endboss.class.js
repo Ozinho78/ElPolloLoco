@@ -37,30 +37,25 @@ class Endboss extends MovableObject {
 
 
   animate(){
-    let id1 = setInterval(() => {
-      if((world.character.x < 2070) && (!this.firstContact)) {
-        this.playAnimation(this.IMAGES_ALERT);
+    setInterval(() => {
+      if(!this.alive){
+        this.playAnimation(this.IMAGES_DEAD);
+      } else if(this.damaged){
+        this.playAnimation(this.IMAGES_HURT);
+      } else if((world.character.x < 2070) && (!this.firstContact)) {
+          this.playAnimation(this.IMAGES_ALERT);
       } else {
         this.firstContact = true;
         this.playAnimation(this.IMAGES_ATTACK);
       }
     }, 200);
-    this.intervalIds.push[id1];
-    let id2 = setInterval(() => {
-      if(this.damaged){
-        this.playAnimation(this.IMAGES_HURT);
-      }
-    }, 200);
-    this.intervalIds.push[id2];
   }
 
 
-  
-  bossFightHit(){
-    this.energy -= 3;
-    console.log(this.energy);
+  showFinishedEndboss(){
+    for (let i = 0; i < 100; i++) {
+      this.playAnimation(this.IMAGES_DEAD);  
+    }
   }
-
-
 
 }

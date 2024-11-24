@@ -104,8 +104,8 @@ class MovableObject extends DrawableObject {
   /**
    * Reduces energy counter when hit
    */
-  isHit(){
-    this.energy -= 5;
+  isHit(damage){
+    this.energy -= damage;
     if(this.energy < 0){
       this.energy = 0;
     } else {

@@ -15,10 +15,14 @@ class World {
   statusBarHealth = new StatusBarHealth(); // creates new object from class StatusBarHealth
   statusBarCoins = new StatusBarCoins();
   statusBarBottles = new StatusBarBottles();
+  statusBarEndboss = new StatusBarEndboss();
   //throwableObjects = [new ThrowableObject()];
   throwableObjects = [];
   coinsMax = this.level.coins.length;
   bottlesMax = this.level.bottles.length;
+  endboss = this.level.enemies[this.level.enemies.length - 1];
+  lastHit = new Date().getTime();
+  intervalArr = [];
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');   // defines 2D context for canvas
@@ -46,7 +50,8 @@ class World {
     setInterval(() => {
       this.checkCollisions();
       this.checkCollisionsBottleEnemy();
-    }, 50);
+      this.checkCollisionWithEndboss();
+    }, 75);
     setInterval(() => {
       this.checkThrowObjects();
     }, 200);
@@ -83,13 +88,13 @@ class World {
           clearInterval(this.level.enemies[idx].intervalIds[0]);
           clearInterval(this.level.enemies[idx].intervalIds[1]);
           this.level.enemies[idx].loadImage(this.level.enemies[idx].IMAGES_DEAD);
-          console.log('Draufgesprungen...');
+          //console.log('Draufgesprungen...');
         } else {
-          this.character.isHit();
+          this.character.isHit(5);
           this.statusBarHealth.setPercentage(this.character.energy);  
           //console.log('Verletzt...');
         }
-        //console.log(this.character.energy);
+        console.log(this.character.energy);
       };
     });
     this.level.coins.forEach((coin) => { // loops through all enemies in level and checks for collision with character
@@ -112,35 +117,59 @@ class World {
 
 
   /**
-   * Checks collision between bottle and enemy
+   * Checks collision between bottle and enemy (Chicken and Chick)
    */
   checkCollisionsBottleEnemy(){
     this.throwableObjects.forEach((throwable) => {
       let idxThrow = this.throwableObjects.indexOf(throwable);
       this.level.enemies.forEach((enemy) => {
         let idxEnemy = this.level.enemies.indexOf(enemy);
-        if (enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive)) {
-          if(enemy instanceof Endboss){
-            clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
-            this.level.enemies[idxEnemy].damaged = true;
-            this.level.enemies[idxEnemy].bossFightHit();
-            console.log('Riesenhühnchen getroffen...');
-          } else {
-            this.level.enemies[idxEnemy].alive = false;
-            clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
-            clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
-            this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
-            console.log('Hühnchen getroffen...');
-            clearInterval(this.throwableObjects[idxThrow].intervalIds[0]);
-            this.throwableObjects[idxThrow].acceleration = 0.5;
-            this.throwableObjects[idxThrow].speedY = 0;
-            this.throwableObjects[idxThrow].playAnimation(this.throwableObjects[idxThrow].IMAGES_SPLASH);
-          }
+        let notEndboss = (enemy instanceof Chicken) || (enemy instanceof Chick);
+        if(enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive) && (notEndboss)){
+          this.level.enemies[idxEnemy].alive = false;
+          clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
+          clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
+          this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
+          console.log('Hühnchen getroffen...');
+          this.showSplashAnimation(idxThrow);
         }
       });
     });
+  };
+
+
+  /**
+   * Checks Collision with Endboss
+   */
+  checkCollisionWithEndboss(){
+    this.throwableObjects.forEach((throwable) => {
+      let idxThrow = this.throwableObjects.indexOf(throwable);
+      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.lastHit) > 2000)){
+        this.endboss.damaged = true;
+        this.lastHit = new Date().getTime();
+        this.endboss.isHit(40);
+        this.showSplashAnimation(idxThrow);
+        this.statusBarEndboss.setPercentage(this.endboss.energy);
+        if(this.endboss.energy == 0){
+          this.endboss.damaged = false;
+          this.endboss.alive = false;
+        }
+        console.log('Riesenhühnchen getroffen...', this.endboss.energy);
+      }
+    });
   }
 
+
+  /**
+   * Shows splash animation
+   * @param {number} idx index of the thrown bottle
+   */
+  showSplashAnimation(idx){
+    clearInterval(this.throwableObjects[idx].intervalIds[0]);
+    this.throwableObjects[idx].acceleration = 0.5;
+    this.throwableObjects[idx].speedY = 0;
+    this.throwableObjects[idx].playAnimation(this.throwableObjects[idx].IMAGES_SPLASH);
+  }
 
 
   /**
@@ -162,6 +191,7 @@ class World {
 
     this.addObjectsToMap(this.level.backgroundObjects);
     this.addObjectsToMap(this.level.clouds);
+    this.addToMap(this.statusBarEndboss);
     this.ctx.translate(-this.cameraX, 0);
 
     //---------- Place for fixed objects ----------//

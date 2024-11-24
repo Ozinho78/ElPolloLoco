@@ -123,6 +123,7 @@ function startGame() {
   // if(screenAngle == 0){
     bg_sound.pause();
     startScreen.classList.add('d-none');
+    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
     canvas.classList.remove('d-none');
     initLevel1();
     if(fullScreenCheck){
