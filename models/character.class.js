@@ -44,6 +44,97 @@ class Character extends MovableObject {
 
 
   /**
+   * Animates the character by replacing the images from the chosen array
+   */
+  animate(){
+    this.getKeyboardInputInterval();
+    this.getMovementAnimationInterval();
+    this.getIdleInterval();
+  }
+
+  
+  /**
+   * Supervises keyboard input and moves to appropriate direction
+   */
+  getKeyboardInputInterval(){
+    setInterval(() => {
+      this.sound_walking.pause();
+      this.sound_jump.pause();
+      if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)) this.moveToTheRight();    
+      if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)) this.moveToTheLeft();
+      if((this.world.keyboard.UP) && (!this.isAboveGround())) this.moveToTheAbove();
+      this.world.cameraX = -this.x + 80;
+    }, 1000 / 60);
+  }
+
+
+  /**
+   * Moves character to the right
+   */
+  moveToTheRight(){
+    this.moveRight();
+    this.otherDirection = false;
+    if(inGameSoundOn){this.sound_walking.play();}
+  }
+
+
+  /**
+   * Moves character to the left
+   */
+  moveToTheLeft(){
+    this.moveLeft();
+    this.otherDirection = true;
+    if(inGameSoundOn){this.sound_walking.play();}
+  }
+
+
+  /**
+   * Let's character jump
+   */
+  moveToTheAbove(){
+    this.jump();
+    if(inGameSoundOn){this.sound_jump.play();}
+  }
+
+
+  /**
+   * Animates the character's movements
+   */
+  getMovementAnimationInterval(){
+    setInterval(() => {
+      if(this.isDead()){
+        this.playAnimation(this.IMAGES_DEAD);
+      } else if(this.isHurt()){
+        this.playAnimation(this.IMAGES_HURT);
+      } else if(this.isAboveGround()){
+          this.playAnimation(this.IMAGES_JUMP);
+      } else if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){
+          this.playAnimation(this.IMAGES_WALKING);
+      }
+    }, 75);
+  }
+
+
+  /**
+   * Determines the correct idle animation
+   */
+  getIdleInterval(){
+    setInterval(() => {
+      this.sound_snoring.pause();
+      let idleTime = (new Date().getTime() - this.timeDiff) / 1000;
+      if(this.validKeyPressed()){
+        this.resetIdleTimeGetNewTime();
+      } else if((idleTime > 0.1) && (idleTime < 10)){
+        this.playAnimation(this.IMAGES_IDLE);
+      } else {
+        this.playAnimation(this.IMAGES_LONG_IDLE);
+        if(inGameSoundOn){this.sound_snoring.play();}
+      }
+    }, 500);
+  }
+
+
+  /**
    * Resets the idle time and gets current time
    */
   resetIdleTimeGetNewTime(){
@@ -53,83 +144,11 @@ class Character extends MovableObject {
   
 
   /**
-   * Animates the character by replacing the images from the chosen array
-   */
-  animate(){
-    setInterval(() => {
-      this.sound_walking.pause();
-      if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){
-        this.moveRight();
-        this.otherDirection = false;
-        if(inGameSoundOn){this.sound_walking.play();}
-      }
-        
-      if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){
-        this.moveLeft();
-        this.otherDirection = true;
-        if(inGameSoundOn){this.sound_walking.play();}
-      }
-
-      if((this.world.keyboard.UP) && (!this.isAboveGround())){
-        this.jump();
-        if(inGameSoundOn){this.sound_jump.play();}
-      }
-
-        this.world.cameraX = -this.x + 80;
-        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;
-      }, 1000 / 60);
-
-    
-      setInterval(() => {
-        if(this.isDead()){
-          this.playAnimation(this.IMAGES_DEAD);
-        } else if(this.isHurt()){
-          this.playAnimation(this.IMAGES_HURT);
-        } else if(this.isAboveGround()){
-            this.playAnimation(this.IMAGES_JUMP);
-          } else {
-            if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){
-              this.playAnimation(this.IMAGES_WALKING);
-            }
-          }
-      }, 75);
-
-      // Interval for supervising the idle time
-      setInterval(() => {
-        if((this.idleTime >= 5) && (this.idleTime < 10)){
-          this.playIdleAnimation(this.IMAGES_IDLE);
-        }
-        if(this.idleTime >= 10){
-          this.playIdleAnimation(this.IMAGES_LONG_IDLE);
-        }
-      }, 1000);
-  }
-
-
-  /**
    * Checks if a valid key is pressed
    * @returns true if a valid key is pressed, i.e. for ending an interval
    */
   validKeyPressed(){
     return (this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT) || (this.world.keyboard.UP) || (this.world.keyboard.DOWN) || (this.world.keyboard.SPACE);
-  }
-
-
-  /**
-   * Plays animation for Pepe in idle state
-   * @param {Array} arr - Array of image paths, normal idle or long idle
-   */
-  playIdleAnimation(arr){
-    let intervalIdle =
-      setInterval(() => {
-        this.playAnimation(arr);
-        //this.sound_snoring.play();
-        if(this.validKeyPressed()){
-          clearInterval(intervalIdle);
-          this.sound_snoring.pause();
-          this.loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
-        }
-      }, 500);
   }
 
 
