@@ -6,6 +6,8 @@ let keyboard = new Keyboard(); // Create a new Keyboard object
 let bg_sound = new Audio();
 let fullScreenCheck = false;
 let inGameSoundOn = false;
+let sound_win = new Audio('./audio/win.mp3');
+let sound_lost = new Audio('./audio/lost.mp3'); 
 
 console.log(screen.orientation.angle);
 
@@ -84,10 +86,8 @@ function toggleBgMusic(){
   soundOff.classList.toggle('d-none');
   if(soundOff.classList.contains('d-none')){
     bg_sound.play();
-    //inGameSoundOn = true;
   } else {
     bg_sound.pause();
-    //inGameSoundOn = false;
   }
 }
 
@@ -159,6 +159,7 @@ function isMobile() {
  * Shows winning screen
  */
 function showWinningScreen(){
+  if(inGameSoundOn){sound_win.play()};
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('winning_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
@@ -170,6 +171,7 @@ function showWinningScreen(){
  * Shows losing screen
  */
 function showLosingScreen(){
+  if(inGameSoundOn){sound_lost.play()};
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('losing_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');

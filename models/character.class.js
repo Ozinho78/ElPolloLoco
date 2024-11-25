@@ -20,7 +20,7 @@ class Character extends MovableObject {
   speed = 10;
   idleTime = 0;
   timeDiff = new Date().getTime();
-  lastHit = new Date().getTime();
+  lastHit = 0;
   energy = 100;
   coin_counter = 0;
   bottle_counter = 0;
