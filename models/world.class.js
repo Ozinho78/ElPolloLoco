@@ -56,7 +56,7 @@ class World {
    * Checks if throwing key was pressed and throws bottle if available
    */
   checkThrowObjects(){
-    if((this.keyboard.SPACE) && (this.character.bottle_counter) > 0){
+    if((this.keyboard.SPACE) && (this.character.bottle_counter > 0)){
       let adjustThrow = 0;
       if(!this.character.otherDirection){adjustThrow = 100;}
       let bottle = new ThrowableObject(this.character.x + adjustThrow, this.character.y + 100);
@@ -90,7 +90,6 @@ class World {
           this.collisionWithWalkingCharacter();
           this.character.lastHit = new Date().getTime();
         }
-        console.log(this.character.energy);
       };
     });
   }
