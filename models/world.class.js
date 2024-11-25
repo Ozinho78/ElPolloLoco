@@ -59,7 +59,7 @@ class World {
       let bottle = new ThrowableObject(this.character.x + adjustThrow, this.character.y + 100);
       this.throwableObjects.push(bottle);
       this.character.bottle_counter--;
-      console.log('Bottles left', this.character.bottle_counter);
+      //console.log('Bottles left', this.character.bottle_counter);
       this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
     }
   }
@@ -176,15 +176,25 @@ class World {
         let idxEnemy = this.level.enemies.indexOf(enemy);
         let notEndboss = (enemy instanceof Chicken) || (enemy instanceof Chick);
         if(enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive) && (notEndboss)){
-          this.level.enemies[idxEnemy].alive = false;
-          clearInterval(this.level.enemies[idxEnemy].intervalIds[0]);
-          clearInterval(this.level.enemies[idxEnemy].intervalIds[1]);
-          this.level.enemies[idxEnemy].loadImage(this.level.enemies[idxEnemy].IMAGES_DEAD);
-          this.showSplashAnimation(idxThrow);
+          this.showDeadEnemy(idxEnemy, idxThrow);
         }
       });
     });
   };
+
+
+  /**
+   * Shows dead enemy and splash animation of bottle
+   * @param {number} indexEnemy index of enemy in array of enemies
+   * @param {number} indexThrow index of bottle in array of throwables
+   */
+  showDeadEnemy(indexEnemy, indexThrow){
+    this.level.enemies[indexEnemy].alive = false;
+    clearInterval(this.level.enemies[indexEnemy].intervalIds[0]);
+    clearInterval(this.level.enemies[indexEnemy].intervalIds[1]);
+    this.level.enemies[indexEnemy].loadImage(this.level.enemies[indexEnemy].IMAGES_DEAD);
+    this.showSplashAnimation(indexThrow);
+  }
 
 
   /**
@@ -206,7 +216,7 @@ class World {
             this.showWinningScreen();
           }, this.endScreenTimeout);
         }
-        console.log('Riesenhühnchen getroffen...', this.endboss.energy);
+        //console.log('Riesenhühnchen getroffen...', this.endboss.energy);
       }
     });
   }
