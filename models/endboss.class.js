@@ -13,6 +13,7 @@ class Endboss extends MovableObject {
   firstContact = false;
   energy = 100;
   damaged = false;
+  lastHit = new Date().getTime();
   IMAGES_WALK = ENDBOSS_IMAGES['IMAGES_WALK'];
   IMAGES_ALERT = ENDBOSS_IMAGES['IMAGES_ALERT'];
   IMAGES_ATTACK = ENDBOSS_IMAGES['IMAGES_ATTACK'];

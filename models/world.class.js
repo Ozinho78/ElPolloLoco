@@ -13,7 +13,6 @@ class World {
   coinsMax = this.level.coins.length;
   bottlesMax = this.level.bottles.length;
   endboss = this.level.enemies[this.level.enemies.length - 1];
-  lastHit = new Date().getTime();
   endScreenTimeout = 3000;
   sound_jumped_on_chicken = new Audio('./audio/jumpedofchicken.mp3');
   sound_ouch = new Audio('./audio/ouch.mp3');
@@ -85,8 +84,9 @@ class World {
       if(this.character.isColliding(enemy) && (this.level.enemies[idx].alive)){
         if((this.character.isAboveGround()) && (this.character.speedY < 0)){
           this.collisionWithJumpingCharacter(idx);
-        } else {
+        } else if((new Date().getTime() - this.character.lastHit) > 3000){
           this.collisionWithWalkingCharacter();
+          this.character.lastHit = new Date().getTime();
         }
         console.log(this.character.energy);
       };
@@ -207,24 +207,41 @@ class World {
   checkCollisionWithEndboss(){
     this.throwableObjects.forEach((throwable) => {
       let idxThrow = this.throwableObjects.indexOf(throwable);
-      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.lastHit) > 1000)){
-        this.endboss.damaged = true;
-        this.lastHit = new Date().getTime();
-        this.endboss.isHit(35);
-        this.showSplashAnimation(idxThrow);
-        this.statusBarEndboss.setPercentage(this.endboss.energy);
+      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.endboss.lastHit) > 1000)){
+        this.getEndbossHitProcedure(idxThrow);
         if(this.endboss.isDead()){
-          this.endboss.damaged = false;
-          this.endboss.alive = false;
-          setTimeout(() => {
-            this.clearAllIntervals();
-            showWinningScreen();
-          }, this.endScreenTimeout);
+          this.getEndbossDeathProcedure();
         }
       }
     });
   }
 
+
+  /**
+   * Does procedure when endboss is hit
+   * @param {number} index of thrown bottle
+   */
+  getEndbossHitProcedure(index){
+    this.endboss.damaged = true;
+    this.endboss.lastHit = new Date().getTime();
+    this.endboss.isHit(35);
+    this.showSplashAnimation(index);
+    this.statusBarEndboss.setPercentage(this.endboss.energy);
+  }
+
+
+  /**
+   * Does procedure wehen endboss is dead
+   */
+  getEndbossDeathProcedure(){
+    this.endboss.damaged = false;
+    this.endboss.alive = false;
+    setTimeout(() => {
+      this.clearAllIntervals();
+      showWinningScreen();
+    }, this.endScreenTimeout);
+  }
+  
 
   /**
    * Clears all intervals without mercy
