@@ -1,7 +1,5 @@
 class Endboss extends MovableObject {
-  // original size 1045 X 1217
-  x = 2550;  // on last screen with factor 3
-  //x = 400;  // on first screen
+  x = 2550;
   y = 90;
   width = 314;
   height = 365;
@@ -22,20 +20,19 @@ class Endboss extends MovableObject {
   IMAGES_DEAD = ENDBOSS_IMAGES['IMAGES_DEAD'];
 
   constructor(){
-    //const scaleFactor = 0.3;
     super().loadImage('./img/4_enemie_boss_chicken/1_walk/G1.png');
     this.loadImages(this.IMAGES_WALK);
     this.loadImages(this.IMAGES_ALERT);
     this.loadImages(this.IMAGES_ATTACK);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
-    //this.width = this.img.width * scaleFactor;
-    //this.height = this.img.height * scaleFactor;
-    
     this.animate();
   }
 
 
+  /**
+   * Animates the appropriate endboss state
+   */
   animate(){
     setInterval(() => {
       if(!this.alive){
@@ -50,12 +47,4 @@ class Endboss extends MovableObject {
       }
     }, 200);
   }
-
-
-  showFinishedEndboss(){
-    for (let i = 0; i < 100; i++) {
-      this.playAnimation(this.IMAGES_DEAD);  
-    }
-  }
-
 }

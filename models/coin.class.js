@@ -1,5 +1,4 @@
 class Coin extends MovableObject {
-  // original size coin 300 x 300
   width = 120;
   height = 120;
   offset = {
@@ -17,21 +16,20 @@ class Coin extends MovableObject {
   ];
 
   constructor(x, y){
-    //const scaleFactor = 0.4;
     super().loadImage('./img/8_coin/coin_1.png');
     this.loadImages(this.IMAGES_COIN);
     this.x = x;
     this.y = y;
-    //this.width = this.img.width * scaleFactor;
-    //this.height = this.img.height * scaleFactor;
-
     this.animate();
   }
 
 
+  /**
+   * Animates pulsing coin
+   */
   animate(){
     setInterval(() => {
-      let i = this.currentImage % this.IMAGES_COIN.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+      let i = this.currentImage % this.IMAGES_COIN.length;
       let path = this.IMAGES_COIN[i];
       this.img = this.imageCache[path];
       this.currentImage++;

@@ -1,7 +1,6 @@
 let level1;
 
 function initLevel1(){
-// creates new object level1 from Level and overgives the parameters that need to be drawn in World
 level1 = new Level(
   [
     new BackgroundObject('./img/5_background/layers/air.png', -719),
@@ -46,7 +45,7 @@ level1 = new Level(
     new Cloud()
   ],
   [
-    new Chicken(),    // creates new objects from class Chicken and loads constructor, writes objects into array
+    new Chicken(),
     new Chick(),
     new Chicken(),
     new Chick(),
@@ -84,5 +83,5 @@ level1 = new Level(
     new Bottle(1600, 350),
     new Bottle(1700, 350)
   ]
-);
+  );
 }

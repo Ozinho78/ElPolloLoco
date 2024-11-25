@@ -1,5 +1,4 @@
 class Character extends MovableObject {
-  // original size walk 610 x 1200px
   width = 153;
   height = 300;
   x = 80;
@@ -17,8 +16,7 @@ class Character extends MovableObject {
   IMAGES_JUMP = PEPE_IMAGES['IMAGES_JUMP'];
   IMAGES_HURT = PEPE_IMAGES['IMAGES_HURT'];
   IMAGES_DEAD = PEPE_IMAGES['IMAGES_DEAD'];
-  
-  world;    // reference between character and world, declared in method setWorld() in class World, character can now use all variables from world
+  world;
   speed = 10;
   idleTime = 0;
   timeDiff;
@@ -32,31 +30,15 @@ class Character extends MovableObject {
 
 
   constructor(){
-    //const scaleFactor = 0.25;
-    super().loadImage('./img/2_character_pepe/2_walk/W-21.png');  // calls constructor of above class MovableObject
-    // this.loadImages([
-    //   './img/2_character_pepe/2_walk/W-21.png',
-    //   './img/2_character_pepe/2_walk/W-22.png',
-    //   './img/2_character_pepe/2_walk/W-23.png',
-    //   './img/2_character_pepe/2_walk/W-24.png',
-    //   './img/2_character_pepe/2_walk/W-25.png',
-    //   './img/2_character_pepe/2_walk/W-26.png'
-    // ]);
-
+    super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
     this.loadImages(this.IMAGES_IDLE);
     this.loadImages(this.IMAGES_LONG_IDLE);
-    this.loadImages(this.IMAGES_WALKING);   // loads images when new object is created
+    this.loadImages(this.IMAGES_WALKING);
     this.loadImages(this.IMAGES_JUMP);
     this.loadImages(this.IMAGES_HURT);
     this.loadImages(this.IMAGES_DEAD);
-    
-    // console.log(this.img.width);
-    // console.log(this.img.height);
-    //this.width = this.img.width * scaleFactor;
-    //this.height = this.img.height * scaleFactor;
-
     this.applyGravity();
-    this.animate();   // calls animate-method with the setInterval-function
+    this.animate();
   }
 
 
@@ -75,34 +57,33 @@ class Character extends MovableObject {
   animate(){
     this.resetIdleTimeGetNewTime();
     
-      setInterval(() => { // interval for in-/decreasing speed variable
+      setInterval(() => {
         this.sound_walking.pause();
-        
-        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){      // usage of variable level from class World, alternatively level1.level_end_x
-          this.moveRight()      // exported to movable-object-class
+        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){
+          this.moveRight();
           this.otherDirection = false;
           if(inGameSoundOn){this.sound_walking.play();}
           this.resetIdleTimeGetNewTime();
         }
         
-        if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){    // usage of variable level from class World, alternatively level1.level_start_x
-          this.moveLeft();      // exported to movable-object-class
+        if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){
+          this.moveLeft();
           this.otherDirection = true;
           if(inGameSoundOn){this.sound_walking.play();}
           this.resetIdleTimeGetNewTime();
         }
 
-        if((this.world.keyboard.UP) && (!this.isAboveGround())){  // for jumping
-          this.jump();    // exported to movable-object-class
+        if((this.world.keyboard.UP) && (!this.isAboveGround())){
+          this.jump();
           this.resetIdleTimeGetNewTime();
         }
 
-        this.world.cameraX = -this.x + 80;   // moves the camera in opposite direction of walking character, +80 for position the character more right
-        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;   // get the time difference in seconds since last keypress
+        this.world.cameraX = -this.x + 80;
+        this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;
       }, 1000 / 60);
 
     
-      setInterval(() => {   // interval for playing the walk animation
+      setInterval(() => {
         if(this.isDead()){
           this.playAnimation(this.IMAGES_DEAD);
         } else if(this.isHurt()){
@@ -110,8 +91,7 @@ class Character extends MovableObject {
         } else if(this.isAboveGround()){
             this.playAnimation(this.IMAGES_JUMP);
           } else {
-            if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){    // inside setInterval because otherwise error message: Cannot read properties of undefined (reading keyboard)
-              // Walk animation
+            if((this.world.keyboard.RIGHT) || (this.world.keyboard.LEFT)){
               this.playAnimation(this.IMAGES_WALKING);
             }
           }
@@ -125,7 +105,6 @@ class Character extends MovableObject {
         if(this.idleTime >= 10){
           this.playIdleAnimation(this.IMAGES_LONG_IDLE);
         }
-        //console.log(this.idleTime);
       }, 1000);
   }
 
@@ -151,7 +130,7 @@ class Character extends MovableObject {
         if(this.validKeyPressed()){
           clearInterval(intervalIdle);
           this.sound_snoring.pause();
-          this.loadImage('./img/2_character_pepe/2_walk/W-21.png');
+          this.loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
         }
       }, 500);
   }

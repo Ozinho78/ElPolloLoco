@@ -1,5 +1,4 @@
 class Bottle extends MovableObject {
-  // original size 400 x 400px
   IMAGES_BOTTLE_ON_GROUND = BOTTLE_IMAGES['IMAGES_BOTTLE_ON_GROUND'];
   offset = {
       top: 11,
@@ -21,11 +20,10 @@ class Bottle extends MovableObject {
   
   animate(){
     setInterval(() => {
-      let i = this.currentImage % this.IMAGES_BOTTLE_ON_GROUND.length;   // iteriert mit Modulo durch das Array und fängt am Ende wieder bei 0 an
+      let i = this.currentImage % this.IMAGES_BOTTLE_ON_GROUND.length;
       let path = this.IMAGES_BOTTLE_ON_GROUND[i];
       this.img = this.imageCache[path];
       this.currentImage++;
     }, 500);
   }
-
 }

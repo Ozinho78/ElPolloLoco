@@ -9,18 +9,18 @@ class DrawableObject {
 
 
   /**
-   * 
-   * @param {*} percentage 
+   * Determines correct image for percentage status bar
+   * @param {number} percentage 
    */
   setPercentage(percentage){
-    this.percentage = percentage; // => number between 0 ... 5 necessary for choosing right image
-    let path = this.IMAGES[this.resolveImageIndex()];  // determines image path depending on percentage
+    this.percentage = percentage;
+    let path = this.IMAGES[this.resolveImageIndex()];
     this.img = this.imageCache[path];
   }
 
   
   /**
-   * Checks health status and returns number
+   * Checks percentage and returns correct number in array
    * @returns number of image in health array
    */
   resolveImageIndex(){
@@ -54,7 +54,7 @@ class DrawableObject {
    * @param {context} ctx - context, contains methods to draw objects on canvas
    */
    drawFrame(ctx){
-    if((this instanceof Character) || (this instanceof Chicken) || (this instanceof Chick) || (this instanceof Endboss)){   // draws frame only for character and chicken objects
+    if((this instanceof Character) || (this instanceof Chicken) || (this instanceof Chick) || (this instanceof Endboss)){
       // ctx.beginPath();
       // ctx.lineWidth = "2";
       // ctx.strokeStyle = "blue";
@@ -70,9 +70,8 @@ class DrawableObject {
    */
   //loadImage('./img/test.png')
   loadImage(path){
-    this.img = new Image();   // bereits gegebenes Object in JS, this.img = document.getElementById('image') <img id="image" src>
+    this.img = new Image();
     this.img.src = path;
-    //console.log(this.img.width);
   }
 
 
@@ -81,34 +80,10 @@ class DrawableObject {
    * @param {Array} arr - ['img/image1.png', 'img/image2.png', ...]
    */
   loadImages(arr){
-    arr.forEach((path) => {   // path only exists within the scope of the function, contains the path to the image
-      let img = new Image();  // new image is created
-      img.src = path;         // the path is assigned to the image
-      this.imageCache[path] = img; // pushes the image into JSON with "path" as the key
-      //debugger;
+    arr.forEach((path) => {
+      let img = new Image();
+      img.src = path;
+      this.imageCache[path] = img;
     });
-    /*
-    result in console log
-    world.character.imageCache
-    { ./img/2_character_pepe/2_walk/W-21.png: img,
-      ./img/2_character_pepe/2_walk/W-22.png: img,
-      ./img/2_character_pepe/2_walk/W-23.png: img,
-      ./img/2_character_pepe/2_walk/W-24.png: img,
-      ./img/2_character_pepe/2_walk/W-25.png: img,
-    …}
-      ./img/2_character_pepe/2_walk/W-21.png: img
-      ./img/2_character_pepe/2_walk/W-22.png: img
-      ./img/2_character_pepe/2_walk/W-23.png: img
-      ./img/2_character_pepe/2_walk/W-24.png: img
-      ./img/2_character_pepe/2_walk/W-25.png: img
-      ./img/2_character_pepe/2_walk/W-26.png: img
-    */
-
-    // arr.forEach((path) => {      // goes through an array with images and pushes it into the imageCache
-    //   let img = new Image();
-    //   img.src = path;
-    //   this.imageCache.push(img);
-    // });
   }
-
 }

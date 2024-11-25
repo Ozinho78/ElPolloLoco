@@ -1,5 +1,4 @@
 class Chick extends MovableObject {
-  // original size chicken walk 236 x 210
   width = 59;
   height = 53;
   offset = {
@@ -23,9 +22,9 @@ class Chick extends MovableObject {
   
   constructor(){
     super().loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
-    this.loadImages(this.IMAGES_WALKING);   // weil super() nur einmal aufgerufen werden kann
-    this.x = 250 + Math.random() * 2000;   // random x position between 200 and 700 for every chicken
-    this.speed = 0.15 + Math.random() * 0.25; // for random chicken speed
+    this.loadImages(this.IMAGES_WALKING);
+    this.x = 250 + Math.random() * 2000;
+    this.speed = 0.15 + Math.random() * 0.25;
     this.animate();
   }
 
@@ -35,8 +34,8 @@ class Chick extends MovableObject {
    */
   animate(){
     let id1 = 
-      setInterval(() =>{    // calls the function every 16 milliseconds (60 FPS) and reduces the x position by 0.3 pixel each time
-        this.moveLeft();    // exported to movable-object-class
+      setInterval(() =>{
+        this.moveLeft();
       }, 1000 / 60);
     this.intervalIds.push(id1);
     let id2 =  
@@ -45,6 +44,4 @@ class Chick extends MovableObject {
       }, 500);
     this.intervalIds.push(id2);
   }
-  
-  
 }
