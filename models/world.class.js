@@ -61,7 +61,6 @@ class World {
       let bottle = new ThrowableObject(this.character.x + adjustThrow, this.character.y + 100);
       this.throwableObjects.push(bottle);
       this.character.bottle_counter--;
-      //console.log('Bottles left', this.character.bottle_counter);
       this.updateStatusBar(this.character.bottle_counter, this.bottlesMax, this.statusBarBottles);
     }
   }
@@ -142,7 +141,8 @@ class World {
     this.statusBarHealth.setPercentage(this.character.energy);  
     if(this.character.isDead()){
       setTimeout(() => {
-      this.showLosingScreen();
+        this.clearAllIntervals();
+        showLosingScreen();
       }, this.endScreenTimeout);
     }
   }
@@ -217,10 +217,10 @@ class World {
           this.endboss.damaged = false;
           this.endboss.alive = false;
           setTimeout(() => {
-            this.showWinningScreen();
+            this.clearAllIntervals();
+            showWinningScreen();
           }, this.endScreenTimeout);
         }
-        //console.log('Riesenhühnchen getroffen...', this.endboss.energy);
       }
     });
   }
@@ -231,30 +231,6 @@ class World {
    */
   clearAllIntervals(){
     for(let i = 1; i < 9999; i++) window.clearInterval(i);
-  }
-
-
-  /**
-   * Shows winning screen
-   */
-  showWinningScreen(){
-    this.clearAllIntervals();
-    document.getElementById('canvas').classList.add('d-none');
-    document.getElementById('winning_screen').classList.remove('d-none');
-    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
-    document.getElementById('sound_on_icon_canvas').classList.add('d-none');
-  }
-
-
-  /**
-   * Shows losing screen
-   */
-  showLosingScreen(){
-    this.clearAllIntervals();
-    document.getElementById('canvas').classList.add('d-none');
-    document.getElementById('losing_screen').classList.remove('d-none');
-    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
-    document.getElementById('sound_on_icon_canvas').classList.add('d-none');
   }
 
 

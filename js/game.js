@@ -156,6 +156,28 @@ function isMobile() {
 
 
 /**
+ * Shows winning screen
+ */
+function showWinningScreen(){
+  document.getElementById('canvas').classList.add('d-none');
+  document.getElementById('winning_screen').classList.remove('d-none');
+  document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+  document.getElementById('sound_on_icon_canvas').classList.add('d-none');
+}
+
+
+/**
+ * Shows losing screen
+ */
+function showLosingScreen(){
+  document.getElementById('canvas').classList.add('d-none');
+  document.getElementById('losing_screen').classList.remove('d-none');
+  document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+  document.getElementById('sound_on_icon_canvas').classList.add('d-none');
+}
+
+
+/**
  * Get keyboard codes for user input
  */
 function getKeyboardListeners(){
