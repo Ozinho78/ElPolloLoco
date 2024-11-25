@@ -19,14 +19,15 @@ class Character extends MovableObject {
   world;
   speed = 10;
   idleTime = 0;
-  timeDiff;
+  timeDiff = new Date().getTime();
   energy = 100;
   coin_counter = 0;
   bottle_counter = 0;
   sound_walking = new Audio('./audio/running.mp3');
   sound_snoring = new Audio('./audio/snoring7s.mp3');
-  sound_collected_coin = new Audio('./audio/collected-coin.mp3');  
+  sound_collected_coin = new Audio('./audio/collected-coin.mp3');
   sound_collected_bottle = new Audio('./audio/collected-bottle.mp3');
+  sound_jump = new Audio('./audio/jump.mp3');
 
 
   constructor(){
@@ -55,28 +56,24 @@ class Character extends MovableObject {
    * Animates the character by replacing the images from the chosen array
    */
   animate(){
-    this.resetIdleTimeGetNewTime();
-    
-      setInterval(() => {
-        this.sound_walking.pause();
-        if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){
-          this.moveRight();
-          this.otherDirection = false;
-          if(inGameSoundOn){this.sound_walking.play();}
-          this.resetIdleTimeGetNewTime();
-        }
+    setInterval(() => {
+      this.sound_walking.pause();
+      if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){
+        this.moveRight();
+        this.otherDirection = false;
+        if(inGameSoundOn){this.sound_walking.play();}
+      }
         
-        if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){
-          this.moveLeft();
-          this.otherDirection = true;
-          if(inGameSoundOn){this.sound_walking.play();}
-          this.resetIdleTimeGetNewTime();
-        }
+      if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){
+        this.moveLeft();
+        this.otherDirection = true;
+        if(inGameSoundOn){this.sound_walking.play();}
+      }
 
-        if((this.world.keyboard.UP) && (!this.isAboveGround())){
-          this.jump();
-          this.resetIdleTimeGetNewTime();
-        }
+      if((this.world.keyboard.UP) && (!this.isAboveGround())){
+        this.jump();
+        if(inGameSoundOn){this.sound_jump.play();}
+      }
 
         this.world.cameraX = -this.x + 80;
         this.idleTime = (new Date().getTime() - this.timeDiff) / 1000;

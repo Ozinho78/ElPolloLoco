@@ -15,6 +15,8 @@ class World {
   endboss = this.level.enemies[this.level.enemies.length - 1];
   lastHit = new Date().getTime();
   endScreenTimeout = 3000;
+  sound_jumped_on_chicken = new Audio('./audio/jumpedofchicken.mp3');
+  sound_ouch = new Audio('./audio/ouch.mp3');
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');
@@ -127,6 +129,7 @@ class World {
     clearInterval(this.level.enemies[index].intervalIds[0]);
     clearInterval(this.level.enemies[index].intervalIds[1]);
     this.level.enemies[index].loadImage(this.level.enemies[index].IMAGES_DEAD);
+    if(inGameSoundOn){this.sound_jumped_on_chicken.play();}
   }
 
 
@@ -135,6 +138,7 @@ class World {
    */
   collisionWithWalkingCharacter(){
     this.character.isHit(5);
+    if(inGameSoundOn){this.sound_ouch.play();}
     this.statusBarHealth.setPercentage(this.character.energy);  
     if(this.character.isDead()){
       setTimeout(() => {
@@ -237,6 +241,8 @@ class World {
     this.clearAllIntervals();
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('winning_screen').classList.remove('d-none');
+    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+    document.getElementById('sound_on_icon_canvas').classList.add('d-none');
   }
 
 
@@ -247,6 +253,8 @@ class World {
     this.clearAllIntervals();
     document.getElementById('canvas').classList.add('d-none');
     document.getElementById('losing_screen').classList.remove('d-none');
+    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+    document.getElementById('sound_on_icon_canvas').classList.add('d-none');
   }
 
 
