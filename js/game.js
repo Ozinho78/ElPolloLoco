@@ -8,12 +8,12 @@ let inGameSoundOn = false;
 let sound_win = new Audio('./audio/win.mp3');
 let sound_lost = new Audio('./audio/lost.mp3'); 
 
-console.log(screen.orientation.angle);
 
 /**
  * Checks if user has a mobile device or not, adjusts start screen and loads listeners
  */
 function init(){
+  let orientation = screen.orientation.angle;
   let mobileHudRef = document.getElementById('mobile_hud');
   let desktopHudRef = document.getElementById('desktop_hud');
   let headlineRef = document.getElementById('headline');

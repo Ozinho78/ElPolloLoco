@@ -8,22 +8,42 @@
 }
 
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-image: url('../img/background_desert.jpg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 button {
   cursor: pointer;
   border: none;
+}
+
+.rotation-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.rotation-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  transform: translate(-50%, -50%);
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../img/background_desert.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
 }
 
 h1 {
@@ -133,8 +153,8 @@ h1 {
 
 .panel-bottom {
   display: flex;
-  width: 720px;
-  justify-content: space-between;
+  width: 820px;
+  justify-content: space-around;
   margin-top: 10px;
 }
 
@@ -194,5 +214,15 @@ canvas {
   }
   canvas {
     height: 100vh;
+  }
+}
+
+
+@media screen and (orientation: portrait){
+  .game-container {
+    display: none;
+  }
+  .rotation-container {
+    display: block;
   }
 }
