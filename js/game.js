@@ -1,8 +1,7 @@
-let canvas = document.getElementById('canvas'); // Get the canvas element from index.html 720x480
+let canvas = document.getElementById('canvas');
 let startScreen = document.getElementById('start_screen');
-// let ctx;   // has been declared in class World where canvas was overgiven as parameter into constructor
 let world;
-let keyboard = new Keyboard(); // Create a new Keyboard object
+let keyboard = new Keyboard();
 let bg_sound = new Audio();
 let fullScreenCheck = false;
 let inGameSoundOn = false;
@@ -10,7 +9,6 @@ let sound_win = new Audio('./audio/win.mp3');
 let sound_lost = new Audio('./audio/lost.mp3'); 
 
 console.log(screen.orientation.angle);
-
 
 /**
  * Checks if user has a mobile device or not, adjusts start screen and loads listeners
@@ -91,6 +89,10 @@ function toggleBgMusic(){
   }
 }
 
+
+/**
+ * Enables/Disables the game music
+ */
 function toggleGameMusic(){
   let soundOnCanvas = document.getElementById('sound_on_icon_canvas');
   let soundOffCanvas = document.getElementById('sound_off_icon_canvas');
@@ -118,24 +120,24 @@ function getSoundProperties(){
  * Starts the game by clicking on the start screen
  */
 function startGame() {
-  //if (isMobile()){alert('Mobile');} else {alert('Not Mobile');}
-  // const screenAngle = screen.orientation.angle;
-  // if(screenAngle == 0){
-    bg_sound.pause();
-    document.getElementById('winning_screen').classList.add('d-none');
-    document.getElementById('losing_screen').classList.add('d-none');
-    startScreen.classList.add('d-none');
-    document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
-    canvas.classList.remove('d-none');
-    initLevel1();
-    if(fullScreenCheck){
-      world = new World(canvas, keyboard);
-    } else {
-      world = new World(canvas, keyboard);
-    }
+  bg_sound.pause();
+  document.getElementById('winning_screen').classList.add('d-none');
+  document.getElementById('losing_screen').classList.add('d-none');
+  startScreen.classList.add('d-none');
+  document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+  canvas.classList.remove('d-none');
+  initLevel1();
+  if(fullScreenCheck){
+    world = new World(canvas, keyboard);
+  } else {
+    world = new World(canvas, keyboard);
+  }
 }
 
 
+/**
+ * Restarts the game and goes back to the start screen
+ */
 function backToStart(){
   location.reload();
 }
