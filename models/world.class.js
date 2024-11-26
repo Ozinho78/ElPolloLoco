@@ -209,7 +209,7 @@ class World {
   checkCollisionWithEndboss(){
     this.throwableObjects.forEach((throwable) => {
       let idxThrow = this.throwableObjects.indexOf(throwable);
-      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.endboss.lastHit) > 1000)){
+      if(this.endboss.isColliding(throwable) && ((new Date().getTime() - this.endboss.lastHit) > 2000)){
         this.getEndbossHitProcedure(idxThrow);
         if(this.endboss.isDead()){
           this.getEndbossDeathProcedure();

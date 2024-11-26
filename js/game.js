@@ -30,19 +30,33 @@ function init(){
 
 
 /**
+ * Starts the game by clicking on the start screen
+ */
+function startGame() {
+  bg_sound.pause();
+  document.getElementById('winning_screen').classList.add('d-none');
+  document.getElementById('losing_screen').classList.add('d-none');
+  startScreen.classList.add('d-none');
+  document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
+  canvas.classList.remove('d-none');
+  initLevel1();
+  if(fullScreenCheck){
+    world = new World(canvas, keyboard);
+  } else {
+    world = new World(canvas, keyboard);
+  }
+}
+
+
+/**
  * Checks if already in full screen mode and exists or enters full screen
  */
 function fullScreen(){
-  let startScreenRef = document.getElementById('start_screen');
-  let fullScreenRef = document.getElementById('fullscreen');
+  let fullScreenRef = document.getElementById('fullscreen-ctn');
   if(!fullScreenCheck){
-    enterFullScreen(startScreenRef);
     enterFullScreen(fullScreenRef);
-    fullScreenCheck = true;
   } else {
-    exitFullScreen(startScreenRef);
     exitFullScreen(fullScreenRef);
-    fullScreenCheck = false;
   }
 }
 
@@ -52,12 +66,22 @@ function fullScreen(){
  * @param {element} element document element that should be full screened
  */
 function enterFullScreen(element){
+  let prom;
   if(element.requestFullscreen){
-    element.requestFullscreen();
-  } else if(element.msRequestFullscreen){     // for IE11 (remove June 15, 2022)
-    element.msRequestFullscreen();
-  } else if(element.webkitRequestFullscreen){ // iOS Safari
-    element.webkitRequestFullscreen();
+    prom = element.requestFullscreen();
+  } else if(element.msRequestFullscreen){
+    prom = element.msRequestFullscreen();
+  } else if(element.webkitRequestFullscreen){
+    prom =element.webkitRequestFullscreen();
+  }
+  if(prom){
+    prom.then(() => {
+      canvas.width = window.innerWidth;
+      fullScreenCheck = true;
+    }).catch((err) => {
+      console.warn("Fullscreen not possible", err);
+      fullScreenCheck = false;
+    });
   }
 }
 
@@ -65,11 +89,21 @@ function enterFullScreen(element){
 /**
  * Exits full screen mode depending on browser
  */
-function exitFullScreen(){
-  if(document.exitFullscreen){
-    document.exitFullscreen();
-  } else if(document.webkitExitFullscreen){
-    document.webkitExitFullscreen();
+function exitFullScreen(element){
+  let prom;
+  if(element.exitFullscreen){
+    prom = element.exitFullscreen();
+  } else if(element.webkitExitFullscreen){
+    prom = element.webkitExitFullscreen();
+  }
+  if(prom){
+    prom.then(() => {
+      canvas.style.width = '';
+      fullScreenCheck = false;
+    }).catch((err) => {
+      console.warn("Error detected.", err);
+      fullScreenCheck = true;
+    });
   }
 }
 
@@ -117,25 +151,6 @@ function getSoundProperties(){
 
 
 /**
- * Starts the game by clicking on the start screen
- */
-function startGame() {
-  bg_sound.pause();
-  document.getElementById('winning_screen').classList.add('d-none');
-  document.getElementById('losing_screen').classList.add('d-none');
-  startScreen.classList.add('d-none');
-  document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
-  canvas.classList.remove('d-none');
-  initLevel1();
-  if(fullScreenCheck){
-    world = new World(canvas, keyboard);
-  } else {
-    world = new World(canvas, keyboard);
-  }
-}
-
-
-/**
  * Restarts the game and goes back to the start screen
  */
 function backToStart(){
@@ -162,6 +177,7 @@ function isMobile() {
  */
 function showWinningScreen(){
   if(inGameSoundOn){sound_win.play()};
+  exitFullScreen(document.getElementById('winning_screen'));
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('winning_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
@@ -174,6 +190,7 @@ function showWinningScreen(){
  */
 function showLosingScreen(){
   if(inGameSoundOn){sound_lost.play()};
+  exitFullScreen(document.getElementById('losing_screen'));
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('losing_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
