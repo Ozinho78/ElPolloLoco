@@ -24,6 +24,7 @@ class Character extends MovableObject {
   energy = 100;
   coin_counter = 0;
   bottle_counter = 0;
+  keyboardInterval;
   sound_walking = new Audio('./audio/running.mp3');
   sound_snoring = new Audio('./audio/snoring7s.mp3');
   sound_collected_coin = new Audio('./audio/collected-coin.mp3');
@@ -62,7 +63,7 @@ class Character extends MovableObject {
    * Supervises keyboard input and moves to appropriate direction
    */
   getKeyboardInputInterval(){
-    setInterval(() => {
+    this.keyboardInterval = setInterval(() => {
       this.sound_walking.pause();
       this.sound_jump.pause();
       if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)) this.moveToTheRight();    

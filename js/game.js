@@ -37,7 +37,7 @@ function startGame() {
   startScreen.classList.add('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
   canvas.classList.remove('d-none');
-  document.getElementById('mobile_hud').classList.remove('d-none');
+  if(isMobile()){document.getElementById('mobile_hud').classList.remove('d-none');}
   initLevel1();
   if(fullScreenCheck){
     world = new World(canvas, keyboard);
