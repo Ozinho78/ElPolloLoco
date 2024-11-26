@@ -226,33 +226,33 @@ function getTouchListeners(){
   document.getElementById('btnLeft').addEventListener('touchstart', (event) => {
     event.preventDefault();
     keyboard.LEFT = true;
-  });
+  }, {passive: false});
   document.getElementById('btnLeft').addEventListener('touchend', (event) => {
     event.preventDefault();
     keyboard.LEFT = false;
-  });
+  }, {passive: false});
   document.getElementById('btnRight').addEventListener('touchstart', (event) => {
     event.preventDefault();
     keyboard.RIGHT = true;
-  });
+  }, {passive: false});
   document.getElementById('btnRight').addEventListener('touchend', (event) => {
     event.preventDefault();
     keyboard.RIGHT = false;
-  });
+  }, {passive: false});
   document.getElementById('btnUp').addEventListener('touchstart', (event) => {
     event.preventDefault();
     keyboard.UP = true;
-  });
+  }, {passive: false});
   document.getElementById('btnUp').addEventListener('touchend', (event) => {
     event.preventDefault();
     keyboard.UP = false;
-  });
+  }, {passive: false});
   document.getElementById('btnJump').addEventListener('touchstart', (event) => {
     event.preventDefault();
     keyboard.SPACE = true;
-  });
+  }, {passive: false});
   document.getElementById('btnJump').addEventListener('touchend', (event) => {
     event.preventDefault();
     keyboard.SPACE = false;
-  });
+  }, {passive: false});
 }

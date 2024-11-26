@@ -14,10 +14,6 @@ class World {
   bottlesMax = this.level.bottles.length;
   endboss = this.level.enemies[this.level.enemies.length - 1];
   endScreenTimeout = 3000;
-  sound_jumped_on_chicken = new Audio('./audio/jumpedofchicken.mp3');
-  sound_ouch = new Audio('./audio/ouch.mp3');
-  sound_angry = new Audio('./audio/angry.mp3');
-  sound_bottle_on_chicken = new Audio('./audio/bottleonchicken.mp3');
   
   constructor(canvas, keyboard){
     this.ctx = canvas.getContext('2d');
@@ -129,7 +125,7 @@ class World {
     clearInterval(this.level.enemies[index].intervalIds[0]);
     clearInterval(this.level.enemies[index].intervalIds[1]);
     this.level.enemies[index].loadImage(this.level.enemies[index].IMAGES_DEAD);
-    if(inGameSoundOn){this.sound_jumped_on_chicken.play();}
+    if(inGameSoundOn){this.character.sound_jumped_on_chicken.play();}
   }
 
 
@@ -138,7 +134,7 @@ class World {
    */
   collisionWithWalkingCharacter(){
     this.character.isHit(20);
-    if(inGameSoundOn){this.sound_ouch.play();}
+    if(inGameSoundOn){this.character.sound_ouch.play();}
     this.statusBarHealth.setPercentage(this.character.energy);  
     if(this.character.isDead()){
       setTimeout(() => {
@@ -181,7 +177,7 @@ class World {
         let idxEnemy = this.level.enemies.indexOf(enemy);
         let notEndboss = (enemy instanceof Chicken) || (enemy instanceof Chick);
         if(enemy.isColliding(throwable) && (this.level.enemies[idxEnemy].alive) && (notEndboss)){
-          if(inGameSoundOn){this.sound_bottle_on_chicken.play();}
+          if(inGameSoundOn){this.character.sound_bottle_on_chicken.play();}
           this.showDeadEnemy(idxEnemy, idxThrow);
         }
       });
@@ -224,7 +220,7 @@ class World {
    * @param {number} index of thrown bottle
    */
   getEndbossHitProcedure(index){
-    if(inGameSoundOn){this.sound_angry.play();}
+    if(inGameSoundOn){this.character.sound_angry.play();}
     this.endboss.damaged = true;
     this.endboss.lastHit = new Date().getTime();
     this.endboss.isHit(35);

@@ -28,7 +28,11 @@ class Character extends MovableObject {
   sound_snoring = new Audio('./audio/snoring7s.mp3');
   sound_collected_coin = new Audio('./audio/collected-coin.mp3');
   sound_collected_bottle = new Audio('./audio/collected-bottle.mp3');
-  sound_jump = new Audio('./audio/jump.mp3');
+  sound_jump = new Audio('./audio/boing.mp3');
+  sound_jumped_on_chicken = new Audio('./audio/bottleonchicken.mp3');
+  sound_ouch = new Audio('./audio/ouch.mp3');
+  sound_angry = new Audio('./audio/angry.mp3');
+  sound_bottle_on_chicken = new Audio('./audio/bottleonchicken.mp3');
 
 
   constructor(){
