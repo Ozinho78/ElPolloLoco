@@ -133,7 +133,7 @@ class World {
    * Defines action when chararacter collides walking
    */
   collisionWithWalkingCharacter(){
-    this.character.isHit(100);
+    this.character.isHit(20);
     if(inGameSoundOn){this.character.sound_ouch.play();}
     this.statusBarHealth.setPercentage(this.character.energy);  
     if(this.character.isDead()){
