@@ -14,13 +14,11 @@ let sound_lost = new Audio('./audio/lost.mp3');
  */
 function init(){
   let orientation = screen.orientation.angle;
-  let mobileHudRef = document.getElementById('mobile_hud');
   let desktopHudRef = document.getElementById('desktop_hud');
   let headlineRef = document.getElementById('headline');
   getSoundProperties();
   if(isMobile()){
     headlineRef.classList.add('d-none');
-    mobileHudRef.classList.remove('d-none');
     getTouchListeners();
   } else {
     desktopHudRef.classList.remove('d-none');
@@ -39,6 +37,7 @@ function startGame() {
   startScreen.classList.add('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
   canvas.classList.remove('d-none');
+  document.getElementById('mobile_hud').classList.remove('d-none');
   initLevel1();
   if(fullScreenCheck){
     world = new World(canvas, keyboard);
@@ -182,6 +181,7 @@ function showWinningScreen(){
   document.getElementById('winning_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
   document.getElementById('sound_on_icon_canvas').classList.add('d-none');
+  document.getElementById('mobile_hud').classList.add('d-none');
 }
 
 
@@ -195,6 +195,7 @@ function showLosingScreen(){
   document.getElementById('losing_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
   document.getElementById('sound_on_icon_canvas').classList.add('d-none');
+  document.getElementById('mobile_hud').classList.add('d-none');
 }
 
 
