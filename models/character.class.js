@@ -30,7 +30,7 @@ class Character extends MovableObject {
   sound_collected_coin = new Audio('./audio/collected-coin.mp3');
   sound_collected_bottle = new Audio('./audio/collected-bottle.mp3');
   sound_jump = new Audio('./audio/boing.mp3');
-  sound_jumped_on_chicken = new Audio('./audio/bottleonchicken.mp3');
+  sound_jumped_on_chicken = new Audio('./audio/hit-plant-03-266292.mp3');
   sound_ouch = new Audio('./audio/ouch.mp3');
   sound_angry = new Audio('./audio/angry.mp3');
   sound_bottle_on_chicken = new Audio('./audio/bottleonchicken.mp3');
@@ -65,7 +65,6 @@ class Character extends MovableObject {
   getKeyboardInputInterval(){
     this.keyboardInterval = setInterval(() => {
       this.sound_walking.pause();
-      this.sound_jump.pause();
       if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)) this.moveToTheRight();    
       if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)) this.moveToTheLeft();
       if((this.world.keyboard.UP) && (!this.isAboveGround())) this.moveToTheAbove();

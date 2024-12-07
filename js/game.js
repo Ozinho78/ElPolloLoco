@@ -37,13 +37,11 @@ function startGame() {
   startScreen.classList.add('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
   canvas.classList.remove('d-none');
-  if(isMobile()){document.getElementById('mobile_hud').classList.remove('d-none');}
-  initLevel1();
-  if(fullScreenCheck){
-    world = new World(canvas, keyboard);
-  } else {
-    world = new World(canvas, keyboard);
+  if(isMobile()){
+    document.getElementById('mobile_hud').classList.remove('d-none');
   }
+  initLevel1();
+  world = new World(canvas, keyboard);
 }
 
 
@@ -89,21 +87,14 @@ function enterFullScreen(element){
  * Exits full screen mode depending on browser
  */
 function exitFullScreen(element){
-  let prom;
-  if(element.exitFullscreen){
-    prom = element.exitFullscreen();
-  } else if(element.webkitExitFullscreen){
-    prom = element.webkitExitFullscreen();
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
   }
-  if(prom){
-    prom.then(() => {
-      canvas.style.width = '';
-      fullScreenCheck = false;
-    }).catch((err) => {
-      console.warn("Error detected.", err);
-      fullScreenCheck = true;
-    });
-  }
+  fullScreenCheck = false;
 }
 
 
@@ -176,7 +167,6 @@ function isMobile() {
  */
 function showWinningScreen(){
   if(inGameSoundOn){sound_win.play()};
-  exitFullScreen(document.getElementById('winning_screen'));
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('winning_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
@@ -190,7 +180,6 @@ function showWinningScreen(){
  */
 function showLosingScreen(){
   if(inGameSoundOn){sound_lost.play()};
-  exitFullScreen(document.getElementById('losing_screen'));
   document.getElementById('canvas').classList.add('d-none');
   document.getElementById('losing_screen').classList.remove('d-none');
   document.getElementById('sound_off_icon_canvas').classList.remove('d-none');
