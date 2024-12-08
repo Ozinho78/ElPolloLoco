@@ -11,7 +11,8 @@ class World {
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   coinsMax = this.level.coins.length;
-  bottlesMax = this.level.bottles.length;
+  // bottlesMax = this.level.bottles.length;
+  bottlesMax = 5;
   endboss = this.level.enemies[this.level.enemies.length - 1];
   endScreenTimeout = 3000;
   
@@ -109,7 +110,7 @@ class World {
    */
   checkCollisionWithBottle(){
     this.level.bottles.forEach((bottle) => {
-      if(this.character.isColliding(bottle)){
+      if(this.character.isColliding(bottle) && (this.character.bottle_counter < this.bottlesMax)){
         let idx = this.level.bottles.indexOf(bottle);
         this.collectingBottle(idx);
       }
