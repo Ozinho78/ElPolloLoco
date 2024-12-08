@@ -4,7 +4,7 @@ class Character extends MovableObject {
   x = 80;
   y = 140;
   offset = {
-    top: 130,
+    top: 100,
     left: 26,
     bottom: 0,
     right: 26
@@ -65,9 +65,16 @@ class Character extends MovableObject {
   getKeyboardInputInterval(){
     this.keyboardInterval = setInterval(() => {
       this.sound_walking.pause();
-      if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)) this.moveToTheRight();    
-      if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)) this.moveToTheLeft();
-      if((this.world.keyboard.UP) && (!this.isAboveGround())) this.moveToTheAbove();
+      if((this.world.keyboard.RIGHT) && (this.x < this.world.level.level_end_x)){
+        this.moveToTheRight();
+      }
+      if((this.world.keyboard.LEFT) && (this.x > this.world.level.level_start_x)){
+        this.moveToTheLeft();
+      }
+      if((this.world.keyboard.UP) && (!this.isAboveGround())){
+        this.moveToTheAbove();
+        this.loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
+      }
       this.world.cameraX = -this.x + 80;
     }, 1000 / 60);
   }
@@ -135,7 +142,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_LONG_IDLE);
         if(inGameSoundOn){this.sound_snoring.play();}
       }
-    }, 500);
+    }, 200);
   }
 
 

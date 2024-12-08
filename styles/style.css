@@ -268,7 +268,7 @@ canvas {
   }
 }
 
-@media screen and (orientation: portrait){
+@media screen and (orientation: portrait) and (pointer: coarse){
   .game-container {
     display: none;
   }
