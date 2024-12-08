@@ -13,6 +13,8 @@ class Endboss extends MovableObject {
   firstContact = false;
   energy = 100;
   damaged = false;
+  speed = 7;
+  statusBarEndboss;
   lastHit = new Date().getTime();
   IMAGES_WALK = ENDBOSS_IMAGES['IMAGES_WALK'];
   IMAGES_ALERT = ENDBOSS_IMAGES['IMAGES_ALERT'];
@@ -40,6 +42,7 @@ class Endboss extends MovableObject {
         this.playAnimation(this.IMAGES_DEAD);
       } else if(this.damaged){
         this.playAnimation(this.IMAGES_HURT);
+        this.moveLeft();
       } else if((world.character.x < 2070) && (!this.firstContact)) {
           this.playAnimation(this.IMAGES_ALERT);
       } else {

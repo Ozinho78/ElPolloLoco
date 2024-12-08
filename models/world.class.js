@@ -11,7 +11,6 @@ class World {
   statusBarEndboss = new StatusBarEndboss();
   throwableObjects = [];
   coinsMax = this.level.coins.length;
-  // bottlesMax = this.level.bottles.length;
   bottlesMax = 5;
   endboss = this.level.enemies[this.level.enemies.length - 1];
   endScreenTimeout = 3000;
@@ -31,6 +30,7 @@ class World {
    */
   setWorld(){
     this.character.world = this;
+    this.endboss.world = this;
   }
 
 
@@ -214,6 +214,7 @@ class World {
         }
       }
     });
+    if(this.endboss.damaged){this.statusBarEndboss.x -= 2.7;}
   }
 
 

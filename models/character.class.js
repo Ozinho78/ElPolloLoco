@@ -86,7 +86,7 @@ class Character extends MovableObject {
   moveToTheRight(){
     this.moveRight();
     this.otherDirection = false;
-    if(inGameSoundOn){this.sound_walking.play();}
+    if(inGameSoundOn && (!this.isAboveGround())){this.sound_walking.play();}
   }
 
 
@@ -96,7 +96,7 @@ class Character extends MovableObject {
   moveToTheLeft(){
     this.moveLeft();
     this.otherDirection = true;
-    if(inGameSoundOn){this.sound_walking.play();}
+    if(inGameSoundOn && (!this.isAboveGround())){this.sound_walking.play();}
   }
 
 
@@ -142,7 +142,7 @@ class Character extends MovableObject {
         this.playAnimation(this.IMAGES_LONG_IDLE);
         if(inGameSoundOn){this.sound_snoring.play();}
       }
-    }, 200);
+    }, 500);
   }
 
 
